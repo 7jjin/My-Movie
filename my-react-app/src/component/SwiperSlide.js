@@ -105,17 +105,47 @@ export default function MainSlide() {
   let now = getCurrentDate();
 
   useEffect(() => {
+    // 박스오피스 영화 데이터 가져오는 함수
     const getData = async () => {
       const res = await axios({
         method: "GET",
         url: `http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=4c5de9e925edf65fae959e9305f483ce&targetDt=${now}`,
       });
-      setMovieList(res.data.boxOfficeResult.dailyBoxOfficeList);
-    };
-    getData();
-  }, []);
 
-  console.log(movieList);
+      const boxOfficeMovies = res.data.boxOfficeResult.dailyBoxOfficeList;
+
+      // 각 영화에 대해 getMovies 함수를 호출
+      const moviePromises = boxOfficeMovies.map((movie) => getMovies(movie));
+      const moviesWithPosters = await Promise.all(moviePromises);
+
+      const updatedMovieList = boxOfficeMovies.map((movie, index) => ({
+        ...movie,
+        poster: moviesWithPosters[index],
+      }));
+
+      setMovieList(updatedMovieList);
+    };
+
+    // 박스오피스 영화 데이터의 영화제목과 개봉일 정보를 인자로 받아와 포스터를 가져오는 함수
+    const getMovies = async (movie) => {
+      try {
+        const json = await axios({
+          method: "GET",
+          url: `http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&detail=Y&title=${
+            movie.movieNm
+          }&releaseDts=${movie.openDt.replaceAll("-", "")}&ServiceKey=EP520Y4JRPI6ZC781VKW`,
+        });
+        const posterURL = json.data.Data[0].Result[0].posters.split("|")[0];
+        const title = json.data.Data[0].Result[0].title;
+
+        return posterURL;
+      } catch (error) {
+        console.error("Error fetching poster:", error);
+      }
+    };
+
+    getData();
+  }, [now]);
 
   return (
     <_customSwiper
@@ -130,10 +160,10 @@ export default function MainSlide() {
       {movieList.map((movie) => {
         return (
           <>
-            <SwiperSlide>
+            <SwiperSlide key={movie.rnum}>
               <div>
                 <_imgWrapper>
-                  <_movieImg src={movie5} />
+                  <_movieImg src={movie.poster} />
                   <_movieRank>{movie.rnum}</_movieRank>
                 </_imgWrapper>
 

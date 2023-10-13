@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import Header from "./Header";
-import Main from "./Main";
-import Navbar from "./Navbar";
+import Header from "../component/Header";
+import Main from "../component/Main";
+import Navbar from "../component/Navbar";
 
 const _MainPage = styled.div`
   display: flex;

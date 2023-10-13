@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 import MainTitle from "./MainTitle";
 import MovieChart from "./MovieChart";
+import Country from "./Country";
 
 const _mainWrapper = styled.div`
   padding-bottom: 32px;
@@ -17,6 +18,7 @@ export default function Main() {
       <_mainWrapper>
         <MainTitle />
         <MovieChart />
+        <Country />
       </_mainWrapper>
     </>
   );
