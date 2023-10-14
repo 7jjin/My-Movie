@@ -3,9 +3,14 @@ import Header from "../component/Header";
 import styled from "styled-components";
 import Navbar from "../component/Navbar";
 import { useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlay } from "@fortawesome/free-solid-svg-icons";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import StillCut from "../component/StillCut";
+import ContentSelectBar from "../component/ContentSelectBar";
+import RelativeMovie from "../component/RelativeMovie";
 
 const _MainPage = styled.div`
   display: flex;
@@ -80,6 +85,36 @@ const _ratingDiv = styled.div`
   display: flex;
 `;
 
+const _actorDiv = styled.div`
+  margin-top: 10px;
+  color: rgb(186, 186, 193);
+  font-size: 15px;
+  font-weight: 400;
+`;
+
+const _sectionDiv = styled.section`
+  padding: 16px 40px;
+`;
+
+const _playButton = styled.button`
+  padding: 10px 16px;
+  color: white;
+  background: rgb(248, 47, 98);
+  display: flex;
+  border: none;
+  border-radius: 4px;
+  &:hover {
+    background: rgb(255, 61, 110);
+  }
+`;
+const _playButtonInnerDiv = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const _playButtonSvg = styled.div`
+  margin-right: 5px;
+`;
+
 export default function MovieDetail() {
   const [movieData, setMovieData] = useState([]);
   const { movieName, openDate } = useParams();
@@ -99,6 +134,8 @@ export default function MovieDetail() {
     getMovies();
   }, []);
 
+  const content = useSelector((state) => state.content.content);
+  console.log(content);
   console.log(movieData);
   return (
     <>
@@ -136,6 +173,24 @@ export default function MovieDetail() {
                       <span>{value.Result[0].ratings.rating[0].ratingGrade}</span>
                     </_ratingDiv>
                   </_genreDiv>
+                  <_actorDiv className="actor">
+                    {value.Result[0].actors.actor.length > 3 ? (
+                      <span>
+                        배우 : {value.Result[0].actors.actor[0].actorNm},{value.Result[0].actors.actor[1].actorNm},
+                        {value.Result[0].actors.actor[2].actorNm}
+                      </span>
+                    ) : (
+                      <span>{value.Result[0].actors.actor[0].actorNm}</span>
+                    )}
+                    {/* {value.Reault[0].actors.actor.length > 3 ? (
+                      <span>
+                        배우 : {value.Result[0].actors.actor[0].actorNm},{value.Result[0].actors.actor[1].actorNm},
+                        {value.Result[0].actors.actor[2].actorNm}
+                      </span>
+                    ) : (
+                      <span>배우 : {value.Result[0].actors.actor.actorNm}</span>
+                    )} */}
+                  </_actorDiv>
 
                   <_subTitle className="subtitle">
                     <span>{value.Result[0].plots.plot[0].plotText}</span>
@@ -145,6 +200,20 @@ export default function MovieDetail() {
             </_movieInfos>
           );
         })}
+        <_sectionDiv>
+          <div>
+            <_playButton>
+              <_playButtonInnerDiv>
+                <_playButtonSvg>
+                  <FontAwesomeIcon icon={faPlay} />
+                </_playButtonSvg>
+                <span>무료로 감상하기</span>
+              </_playButtonInnerDiv>
+            </_playButton>
+          </div>
+        </_sectionDiv>
+        <ContentSelectBar />
+        {content === "stillCut" ? <StillCut /> : <RelativeMovie />}
         <Header />
         <Navbar />
       </_MainPage>
