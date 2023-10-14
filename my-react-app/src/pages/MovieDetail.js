@@ -135,8 +135,6 @@ export default function MovieDetail() {
   }, []);
 
   const content = useSelector((state) => state.content.content);
-  console.log(content);
-  console.log(movieData);
   return (
     <>
       <_MainPage>
