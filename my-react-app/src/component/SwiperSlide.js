@@ -7,22 +7,17 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import movie1 from "../img/movie1.jpg";
-import movie2 from "../img/movie2.jpg";
-import movie3 from "../img/movie3.jpg";
-import movie4 from "../img/movie4.jpg";
-import movie5 from "../img/movie5.jpg";
-import movie6 from "../img/movie6.jpg";
-import movie7 from "../img/movie7.jpg";
-import movie8 from "../img/movie8.jpg";
-import movie9 from "../img/movie9.jpg";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { TodayMovieChartAction } from "../store/todayMovieChart";
 
 const _movieImg = styled.img`
   height: 234px;
   border-radius: 15px;
   width: 80%;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.09) 35%, rgba(0, 0, 0, 0.85));
 `;
 const _movieBox = styled.div`
   display: flex;
@@ -46,7 +41,9 @@ const _imgWrapper = styled.div`
 `;
 
 const _movieRank = styled.div`
-  font-size: 33px;
+  font-style: italic;
+  color: white;
+  font-size: 39px;
   bottom: 0px;
   left: 11px;
   position: absolute;
@@ -89,7 +86,6 @@ const _customSwiper = styled(Swiper)`
 function getCurrentDate() {
   var date = new Date();
   var year = date.getFullYear().toString();
-
   var month = date.getMonth() + 1;
   month = month < 10 ? "0" + month.toString() : month.toString();
 
@@ -100,7 +96,9 @@ function getCurrentDate() {
 }
 
 export default function MainSlide() {
-  const [movieList, setMovieList] = useState([]);
+  const { todayMovieList } = useSelector((state) => state.todayMovieChart);
+
+  const dispatch = useDispatch();
 
   let now = getCurrentDate();
 
@@ -122,8 +120,7 @@ export default function MainSlide() {
         ...movie,
         poster: moviesWithPosters[index],
       }));
-
-      setMovieList(updatedMovieList);
+      dispatch(TodayMovieChartAction.isLoading(updatedMovieList));
     };
 
     // 박스오피스 영화 데이터의 영화제목과 개봉일 정보를 인자로 받아와 포스터를 가져오는 함수
@@ -137,7 +134,6 @@ export default function MainSlide() {
         });
         const posterURL = json.data.Data[0].Result[0].posters.split("|")[0];
         const title = json.data.Data[0].Result[0].title;
-
         return posterURL;
       } catch (error) {
         console.error("Error fetching poster:", error);
@@ -154,17 +150,19 @@ export default function MainSlide() {
       slidesPerView={5}
       navigation
       slidesPerGroup={5} // 그룹 당 슬라이드 수 설정
-      onSwiper={(swiper) => console.log(swiper)}
+      //   onSwiper={(swiper) => console.log(swiper)}
       onSlideChange={() => console.log("slide change")}
     >
-      {movieList.map((movie) => {
+      {todayMovieList.map((movie) => {
         return (
           <>
             <SwiperSlide key={movie.rnum}>
               <div>
                 <_imgWrapper>
-                  <_movieImg src={movie.poster} />
-                  <_movieRank>{movie.rnum}</_movieRank>
+                  <Link to={`/movie/${movie.movieNm}/${movie.openDt.replaceAll("-", "")}`}>
+                    <_movieImg src={movie.poster} />
+                    <_movieRank>{movie.rnum}</_movieRank>
+                  </Link>
                 </_imgWrapper>
 
                 <_movieBox>

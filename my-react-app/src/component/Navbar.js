@@ -6,6 +6,7 @@ import React, { useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { titleAction } from "../store/maintitle_h1";
+import { Link } from "react-router-dom";
 
 const NavbarDiv = styled.nav`
   position: fixed;
@@ -66,10 +67,12 @@ export default function Navbar() {
         <Section>
           <ul>
             <li>
-              <Nav_a onClick={() => dispatch(titleAction.Home())}>
-                <FontAwesomeIcon icon={faHouse} />
-                <Nav_span>홈</Nav_span>
-              </Nav_a>
+              <Link to={"/"}>
+                <Nav_a onClick={() => dispatch(titleAction.Home())}>
+                  <FontAwesomeIcon icon={faHouse} />
+                  <Nav_span>홈</Nav_span>
+                </Nav_a>
+              </Link>
             </li>
             <li>
               <Nav_a onClick={() => dispatch(titleAction.TodayBoxOffice())}>
