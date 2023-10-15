@@ -134,6 +134,25 @@ export default function MovieDetail() {
     getMovies();
   }, []);
 
+  console.log(movieData);
+  // RelativeMovie 컴포넌트로 전달할 props 객체 만들기
+  const movieInfos = {};
+
+  if (
+    movieData &&
+    movieData.Data &&
+    movieData.Data.length > 0 &&
+    movieData.Data[0].Result &&
+    movieData.Data[0].Result.length > 0
+  ) {
+    console.log(movieData.Data[0].Result[0].nation);
+    movieInfos.nation = movieData.Data[0].Result[0].nation;
+    movieInfos.use = movieData.Data[0].Result[0].use;
+    movieInfos.actor = movieData.Data[0].Result[0].actors.actor[0].actorNm;
+  } else {
+    console.log("데이터를 사용할 수 없습니다.");
+  }
+
   const content = useSelector((state) => state.content.content);
   return (
     <>
@@ -211,7 +230,7 @@ export default function MovieDetail() {
           </div>
         </_sectionDiv>
         <ContentSelectBar />
-        {content === "stillCut" ? <StillCut /> : <RelativeMovie />}
+        {content === "stillCut" ? <StillCut /> : <RelativeMovie movieInfos={movieInfos} />}
         <Header />
         <Navbar />
       </_MainPage>

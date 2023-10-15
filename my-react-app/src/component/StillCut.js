@@ -13,15 +13,27 @@ import { useParams } from "react-router-dom";
 
 const _h1 = styled.h1`
   padding: 0px 40px;
+  font-size: 20px;
 `;
 
 const _customSwiper = styled(Swiper)`
   position: initial;
   background-color: black;
+  .swiper-button-prev,
+  .swiper-button-next {
+    top: 93px;
+    color: white;
+  }
+  .swiper-button-next {
+    right: 46px;
+  }
+  .swiper-button-prev {
+    left: 20px;
+  }
 `;
 
 const _swiperWrapper = styled.div`
-  padding: 0px 40px;
+  padding: 10px 80px 32px;
   position: relative;
   .swiper-wrapper {
     transition-timing-function: linear !important;
@@ -62,14 +74,22 @@ export default function StillCut() {
       <_swiperWrapper className="swiperWrppaer">
         <_customSwiper
           modules={[Navigation, Pagination, Autoplay]}
-          spaceBetween={30}
+          spaceBetween={10}
           slidesPerView={5}
           navigation
-          autoplay={{ delay: 1500, disableOnInteraction: false, loop: true, loopAdditionalSlides: 1 }}
-          loop={true}
+          autoplay={{
+            delay: 2000,
+            disableOnInteraction: false,
+            loop: true,
+            loopAdditionalSlides: 1,
+            pauseOnMouseEnter: true,
+          }}
+          onSwiper={(swiper) => {
+            swiper.autoplay.start(); // 렌더링 후에 Autoplay를 시작합니다.
+          }}
         >
           {movieData.map((imageUrl, index) => (
-            <SwiperSlide key={index}>
+            <SwiperSlide key={imageUrl}>
               <div>
                 <_stillImg src={imageUrl} alt={`스틸 이미지 ${index}`} />
               </div>

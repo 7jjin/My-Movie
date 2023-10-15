@@ -70,7 +70,7 @@ const _customSwiper = styled(Swiper)`
     top: 200px;
   }
   .swiper-button-next {
-    right: 55px !important;
+    right: 46px !important;
     top: 200px;
   }
   .swiper-button-next:after {

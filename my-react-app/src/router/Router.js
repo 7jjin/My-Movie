@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MovieDetail from "../pages/MovieDetail";
 import MainPage from "../pages/MainPage";
-import MovieChart from "../component/MovieChart";
+import KoreaMovie from "../component/KoreaMovie";
 
 export default function Router() {
   return (
@@ -10,7 +10,7 @@ export default function Router() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/movie/:movieName/:openDate" element={<MovieDetail />} />
-          <Route path="/movieChart" element={<MovieChart />} />
+          <Route path="/KoreaMovie" element={<KoreaMovie />} />
         </Routes>
       </BrowserRouter>
     </>
