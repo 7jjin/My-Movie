@@ -11,7 +11,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { TodayMovieChartAction } from "../store/todayMovieChart";
+import { WeekendMovieChartAction } from "../store/weekendMovieChart";
 
 const _movieImg = styled.img`
   height: 234px;
@@ -95,8 +95,8 @@ function getCurrentDate() {
   return year + month + day - 1;
 }
 
-export default function MainSlide() {
-  const { todayMovieList } = useSelector((state) => state.todayMovieChart);
+export default function WeekendSlid() {
+  const { weekendMovieList } = useSelector((state) => state.weekendMovieChart);
 
   const dispatch = useDispatch();
 
@@ -107,10 +107,10 @@ export default function MainSlide() {
     const getData = async () => {
       const res = await axios({
         method: "GET",
-        url: `http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=4c5de9e925edf65fae959e9305f483ce&targetDt=${now}`,
+        url: `https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchWeeklyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt=${now}&weekGb=0`,
       });
 
-      const boxOfficeMovies = res.data.boxOfficeResult.dailyBoxOfficeList;
+      const boxOfficeMovies = res.data.boxOfficeResult.weeklyBoxOfficeList;
 
       // 각 영화에 대해 getMovies 함수를 호출
       const moviePromises = boxOfficeMovies.map((movie) => getMovies(movie));
@@ -120,7 +120,7 @@ export default function MainSlide() {
         ...movie,
         poster: moviesWithPosters[index],
       }));
-      dispatch(TodayMovieChartAction.isLoading(updatedMovieList));
+      dispatch(WeekendMovieChartAction.isLoading(updatedMovieList));
     };
 
     // 박스오피스 영화 데이터의 영화제목과 개봉일 정보를 인자로 받아와 포스터를 가져오는 함수
@@ -142,6 +142,7 @@ export default function MainSlide() {
 
     getData();
   }, [now]);
+  console.log(weekendMovieList);
 
   return (
     <_customSwiper
@@ -153,7 +154,7 @@ export default function MainSlide() {
       //   onSwiper={(swiper) => console.log(swiper)}
       onSlideChange={() => console.log("slide change")}
     >
-      {todayMovieList.map((movie) => {
+      {weekendMovieList.map((movie) => {
         return (
           <>
             <SwiperSlide key={movie.rnum}>
@@ -169,9 +170,9 @@ export default function MainSlide() {
                   <_movieName>{movie.movieNm}</_movieName>
                   <div>
                     {movie.audiChange > 0 ? (
-                      <span>어제보다 {movie.audiChange}% 🔥 </span>
+                      <span>저번주보다 {movie.audiChange}% 🔥 </span>
                     ) : (
-                      <span>어제보다 {movie.audiChange}% 👎</span>
+                      <span>전번주보다 {movie.audiChange}% 👎</span>
                     )}
                   </div>
                 </_movieBox>

@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import Header from "../component/Header";
-import styled from "styled-components";
 import Navbar from "../component/Navbar";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,6 +10,10 @@ import axios from "axios";
 import StillCut from "../component/StillCut";
 import ContentSelectBar from "../component/ContentSelectBar";
 import RelativeMovie from "../component/RelativeMovie";
+import GlobalStyles from "../component/GlobalStyles";
+import styled, { ThemeProvider } from "styled-components";
+import { darkTheme, lightTheme, NavbarDark, NavbarLight } from "../component/theme";
+import isDarkMode from "../store/darkMode";
 
 const _MainPage = styled.div`
   display: flex;
@@ -152,54 +155,57 @@ export default function MovieDetail() {
   } else {
     console.log("데이터를 사용할 수 없습니다.");
   }
+  const isDarkMode = useSelector((state) => state.app.isDarkMode);
 
   const content = useSelector((state) => state.content.content);
   return (
     <>
-      <_MainPage>
-        {movieData.Data?.map((value) => {
-          return (
-            <_movieInfos key={value.CollName}>
-              {/* {value.Result[0].posters.split("|")[0]} */}
-              <section className="imgBox">
-                <_postDiv className="post">
-                  <_img src={value.Result[0].posters.split("|")[0]} />
-                </_postDiv>
-              </section>
-              <section className="infoBox">
-                <div className="infos">
-                  <_titleDiv className="title">
-                    <span>{movieName}</span>
-                  </_titleDiv>
-                  <_genreDiv>
-                    <div className="gerne">
-                      {value.Result[0].genre.split(",").length > 2 ? (
+      <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+        <GlobalStyles />
+        <_MainPage>
+          {movieData.Data?.map((value) => {
+            return (
+              <_movieInfos key={value.CollName}>
+                {/* {value.Result[0].posters.split("|")[0]} */}
+                <section className="imgBox">
+                  <_postDiv className="post">
+                    <_img src={value.Result[0].posters.split("|")[0]} />
+                  </_postDiv>
+                </section>
+                <section className="infoBox">
+                  <div className="infos">
+                    <_titleDiv className="title">
+                      <span>{movieName}</span>
+                    </_titleDiv>
+                    <_genreDiv>
+                      <div className="gerne">
+                        {value.Result[0].genre.split(",").length > 2 ? (
+                          <span>
+                            {value.Result[0].genre.split(",")[0]},{value.Result[0].genre.split(",")[1]}
+                          </span>
+                        ) : (
+                          <span>{value.Result[0].genre}</span>
+                        )}
+                      </div>
+
+                      <p>|</p>
+
+                      <_ratingDiv className="rating">
+                        <span>{value.Result[0].runtime}분</span>
+                        <p>|</p>
+                        <span>{value.Result[0].ratings.rating[0].ratingGrade}</span>
+                      </_ratingDiv>
+                    </_genreDiv>
+                    <_actorDiv className="actor">
+                      {value.Result[0].actors.actor.length > 3 ? (
                         <span>
-                          {value.Result[0].genre.split(",")[0]},{value.Result[0].genre.split(",")[1]}
+                          배우 : {value.Result[0].actors.actor[0].actorNm},{value.Result[0].actors.actor[1].actorNm},
+                          {value.Result[0].actors.actor[2].actorNm}
                         </span>
                       ) : (
-                        <span>{value.Result[0].genre}</span>
+                        <span>{value.Result[0].actors.actor[0].actorNm}</span>
                       )}
-                    </div>
-
-                    <p>|</p>
-
-                    <_ratingDiv className="rating">
-                      <span>{value.Result[0].runtime}분</span>
-                      <p>|</p>
-                      <span>{value.Result[0].ratings.rating[0].ratingGrade}</span>
-                    </_ratingDiv>
-                  </_genreDiv>
-                  <_actorDiv className="actor">
-                    {value.Result[0].actors.actor.length > 3 ? (
-                      <span>
-                        배우 : {value.Result[0].actors.actor[0].actorNm},{value.Result[0].actors.actor[1].actorNm},
-                        {value.Result[0].actors.actor[2].actorNm}
-                      </span>
-                    ) : (
-                      <span>{value.Result[0].actors.actor[0].actorNm}</span>
-                    )}
-                    {/* {value.Reault[0].actors.actor.length > 3 ? (
+                      {/* {value.Reault[0].actors.actor.length > 3 ? (
                       <span>
                         배우 : {value.Result[0].actors.actor[0].actorNm},{value.Result[0].actors.actor[1].actorNm},
                         {value.Result[0].actors.actor[2].actorNm}
@@ -207,33 +213,34 @@ export default function MovieDetail() {
                     ) : (
                       <span>배우 : {value.Result[0].actors.actor.actorNm}</span>
                     )} */}
-                  </_actorDiv>
+                    </_actorDiv>
 
-                  <_subTitle className="subtitle">
-                    <span>{value.Result[0].plots.plot[0].plotText}</span>
-                  </_subTitle>
-                </div>
-              </section>
-            </_movieInfos>
-          );
-        })}
-        <_sectionDiv>
-          <div>
-            <_playButton>
-              <_playButtonInnerDiv>
-                <_playButtonSvg>
-                  <FontAwesomeIcon icon={faPlay} />
-                </_playButtonSvg>
-                <span>무료로 감상하기</span>
-              </_playButtonInnerDiv>
-            </_playButton>
-          </div>
-        </_sectionDiv>
-        <ContentSelectBar />
-        {content === "stillCut" ? <StillCut /> : <RelativeMovie movieInfos={movieInfos} />}
-        <Header />
-        <Navbar />
-      </_MainPage>
+                    <_subTitle className="subtitle">
+                      <span>{value.Result[0].plots.plot[0].plotText}</span>
+                    </_subTitle>
+                  </div>
+                </section>
+              </_movieInfos>
+            );
+          })}
+          <_sectionDiv>
+            <div>
+              <_playButton>
+                <_playButtonInnerDiv>
+                  <_playButtonSvg>
+                    <FontAwesomeIcon icon={faPlay} />
+                  </_playButtonSvg>
+                  <span>무료로 감상하기</span>
+                </_playButtonInnerDiv>
+              </_playButton>
+            </div>
+          </_sectionDiv>
+          <ContentSelectBar />
+          {content === "stillCut" ? <StillCut /> : <RelativeMovie movieInfos={movieInfos} />}
+          <Header />
+          <Navbar />
+        </_MainPage>
+      </ThemeProvider>
     </>
   );
 }

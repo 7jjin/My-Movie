@@ -1,15 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initTitle = {
-  title: "홈",
+  title: "일별 박스오피스",
 };
 const titleSlice = createSlice({
   name: "title",
   initialState: initTitle,
   reducers: {
-    Home(state) {
-      state.title = "홈";
-    },
     TodayBoxOffice(state) {
       state.title = "일별 박스오피스";
     },

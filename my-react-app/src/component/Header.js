@@ -5,7 +5,8 @@ import styled from "styled-components";
 
 const WrapperBox = styled.div`
   display: flex;
-  background-color: #141517;
+  /* background-color: #141517; */
+  background-color: ${(props) => props.theme.bgColor};
   flex-direction: row-reverse;
   height: 56px;
   position: fixed;
@@ -24,13 +25,14 @@ const UlTag = styled.ul`
   justify-content: space-between;
   align-items: center;
   & > li {
+    color: ${(props) => props.theme.color};
     margin: 0px 5px;
   }
 `;
 
 const LoginBtn = styled.button`
-  background-color: #141517;
-  color: white;
+  background-color: ${(props) => props.theme.bgColor};
+  color: ${(props) => props.theme.color};
   border-radius: 4px;
   padding: 4px 10px;
   font-size: 13px;

@@ -8,7 +8,7 @@ const _h1Wrapper = styled.div`
 `;
 
 const _h1 = styled.h1`
-  color: #fff;
+  color: ${(props) => props.theme.h1Wrapper};
   margin: 0 0 12px;
   font-size: 30px;
   font-weight: 800;
@@ -27,12 +27,11 @@ const _hr = styled.hr`
 `;
 
 export default function MainTitle() {
-  const title = useSelector((state) => state.title.title);
   // console.log(title);
   return (
     <>
       <_h1Wrapper>
-        <_h1>{title}</_h1>
+        <_h1>홈</_h1>
         <_hr />
       </_h1Wrapper>
     </>

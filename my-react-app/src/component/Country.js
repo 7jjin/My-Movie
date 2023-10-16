@@ -10,7 +10,7 @@ const _title = styled.div`
   font-size: 22px;
   line-height: 1.423em;
   font-weight: 700;
-  color: white;
+  color: ${(props) => props.theme.color};
 `;
 
 const _countryBox = styled.div`

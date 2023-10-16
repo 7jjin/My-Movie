@@ -1,5 +1,7 @@
+import { useSelector } from "react-redux";
 import MainSlide from "./SwiperSlide";
 import styled from "styled-components";
+import WeekendSlid from "./WeekendSlid";
 
 const _movieChartTitle = styled.span`
   font-size: 22px;
@@ -21,15 +23,16 @@ const _movieChartWrapper = styled.div`
 `;
 
 export default function MovieChart() {
+  const title = useSelector((state) => state.title.title);
   return (
     <>
       <_movieChartWrapper className="movieChartWrapper">
         <div className="content">
           <_movieChartTitle>
-            <span>현재 상영중인 영화</span>
+            <span>{title}</span>
           </_movieChartTitle>
           <_movieChartChart className="movieChartChart">
-            <MainSlide />
+            {title === "일별 박스오피스" ? <MainSlide /> : <WeekendSlid />}
           </_movieChartChart>
         </div>
       </_movieChartWrapper>
