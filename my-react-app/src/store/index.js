@@ -5,6 +5,7 @@ import contentSlice from "./content";
 import koreaMovieListSlice from "./koreaMovie";
 import japenMovieListSlice from "./japenMovie";
 import usMovieListSlice from "./UsMovie";
+import etcMovieListSlice from "./etcMovie";
 import genreListSlice from "./genreButton";
 
 const store = configureStore({
@@ -15,6 +16,7 @@ const store = configureStore({
     koreaMovieList: koreaMovieListSlice,
     japenMovieList: japenMovieListSlice,
     usMovieList: usMovieListSlice,
+    etcMovieList: etcMovieListSlice,
     genreList: genreListSlice,
   },
 });

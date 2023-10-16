@@ -7,7 +7,6 @@ import axios from "axios";
 
 import { useDispatch, useSelector } from "react-redux";
 import { usMovieListAction } from "../store/UsMovie";
-import { genreListAction } from "../store/genreButton";
 
 const _MainPage = styled.div`
   display: flex;
