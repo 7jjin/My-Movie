@@ -133,12 +133,31 @@ export default function GenreList() {
           </_button>
         </_li>
         <_li>
+          <_button active={genreList.includes("범죄")} onClick={() => dispatch(genreListAction.toggle("범죄"))}>
+            범죄
+            {genreList.includes("범죄") && (
+              <FontAwesomeIcon
+                icon={faXmark}
+                style={{
+                  verticalAlign: "middle",
+                  width: "15px",
+                  height: "15px",
+                  marginLeft: "4px",
+                  backgroundColor: "black",
+                  color: "white",
+                  borderRadius: "50%",
+                }}
+              />
+            )}
+          </_button>
+        </_li>
+        <_li>
           <_button
-            active={genreList.includes("범죄,액션")}
-            onClick={() => dispatch(genreListAction.toggle("범죄,액션"))}
+            active={genreList.includes("애니메이션")}
+            onClick={() => dispatch(genreListAction.toggle("애니메이션"))}
           >
-            범죄,액션
-            {genreList.includes("범죄,액션") && (
+            애니메이션
+            {genreList.includes("애니메이션") && (
               <FontAwesomeIcon
                 icon={faXmark}
                 style={{

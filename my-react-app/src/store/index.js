@@ -3,6 +3,8 @@ import titleSlice from "./maintitle_h1";
 import TodayMovieChartSlice from "./todayMovieChart";
 import contentSlice from "./content";
 import koreaMovieListSlice from "./koreaMovie";
+import japenMovieListSlice from "./japenMovie";
+import usMovieListSlice from "./UsMovie";
 import genreListSlice from "./genreButton";
 
 const store = configureStore({
@@ -11,6 +13,8 @@ const store = configureStore({
     todayMovieChart: TodayMovieChartSlice,
     content: contentSlice,
     koreaMovieList: koreaMovieListSlice,
+    japenMovieList: japenMovieListSlice,
+    usMovieList: usMovieListSlice,
     genreList: genreListSlice,
   },
 });

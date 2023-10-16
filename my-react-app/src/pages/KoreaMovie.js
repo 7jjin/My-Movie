@@ -7,7 +7,6 @@ import axios from "axios";
 
 import { useDispatch, useSelector } from "react-redux";
 import { koreaMovieListAction } from "../store/koreaMovie";
-import { genreListAction } from "../store/genreButton";
 
 const _MainPage = styled.div`
   display: flex;
@@ -113,7 +112,8 @@ export default function KoreaMovie() {
     };
     getData();
   }, []);
-  console.log(koreaMovieList);
+  // console.log(koreaMovieList);
+  console.log(genreList);
   return (
     <>
       <_MainPage>
@@ -127,8 +127,9 @@ export default function KoreaMovie() {
               {koreaMovieList
                 .filter((movie) => {
                   // 선택한 장르 목록에 어떤 장르가 포함되어 있으면 해당 장르의 영화만 표시
-                  return genreList.length === 0 || genreList.includes(movie.genreAlt);
+                  return genreList.length === 0 || genreList.includes(movie.genreAlt.split(",")[0]);
                 })
+                .filter((movie) => movie.poster)
                 .map((movie) => {
                   return (
                     <_li key={movie.rnum}>
