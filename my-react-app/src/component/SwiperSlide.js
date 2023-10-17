@@ -18,6 +18,9 @@ const _movieImg = styled.img`
   border-radius: 15px;
   width: 80%;
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.09) 35%, rgba(0, 0, 0, 0.85));
+  @media (max-width: 1300px) {
+    height: 210px;
+  }
 `;
 const _movieBox = styled.div`
   display: flex;
@@ -152,6 +155,22 @@ export default function MainSlide() {
       slidesPerGroup={5} // 그룹 당 슬라이드 수 설정
       //   onSwiper={(swiper) => console.log(swiper)}
       onSlideChange={() => console.log("slide change")}
+      breakpoints={{
+        // 1300px 이상일 때
+        1300: {
+          slidesPerView: 5,
+          spaceBetween: 30,
+        },
+        // 1024px 이상일 때
+        1024: {
+          slidesPerView: 4,
+          spaceBetween: 10,
+        },
+        // 768px 이상일 때
+        768: {
+          slidesPerView: 3,
+        },
+      }}
     >
       {todayMovieList.map((movie) => {
         return (

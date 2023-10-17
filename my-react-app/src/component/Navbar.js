@@ -19,12 +19,20 @@ const NavbarDiv = styled.nav`
 
   width: 240px;
   height: 100%;
-  /* border-right: 1px #1b1c1d solid; */
+  @media (max-width: 900px) {
+    bottom: 0px;
+    width: 100%;
+    height: auto;
+    top: initial;
+  }
 `;
 const Navbar_a = styled.a`
   display: block;
   margin: 24px 0 0 26px;
   text-decoration: none;
+  @media (max-width: 900px) {
+    display: none;
+  }
 `;
 const Navbar_img = styled.img`
   vertical-align: top;
@@ -34,17 +42,27 @@ const Navbar_img = styled.img`
 const Section = styled.section`
   padding: 0 16px;
   margin: 45px 0 0;
+  @media (max-width: 900px) {
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
   & > ul {
     list-style: none;
     color: white;
     margin: 0;
     padding: 0;
+    @media (max-width: 900px) {
+      display: flex;
+      padding-right: 165px;
+      justify-content: space-between;
+    }
   }
 `;
 
 const Nav_a = styled.li`
   display: flex;
   padding: 9px 12px;
+  justify-content: center;
   color: ${(props) => props.theme.navbarli};
   cursor: pointer;
   &:hover {
@@ -71,6 +89,14 @@ const _lightmodeli = styled.li`
   padding-left: 20px;
   color: #d4d7db;
   cursor: pointer;
+  @media (max-width: 900px) {
+    left: initial;
+    right: 0px;
+    width: initial;
+    top: 11px;
+    height: 60%;
+    margin-right: 16px;
+  }
   &:hover {
     background: #303133;
     border-radius: 8px;
@@ -97,6 +123,10 @@ const _lightModeSpan = styled.span`
   cursor: pointer;
 `;
 
+const _li = styled.li`
+  width: 33.3%;
+`;
+
 export default function Navbar() {
   //dispatch로 함수 실행
   const dispatch = useDispatch();
@@ -109,34 +139,33 @@ export default function Navbar() {
         </Navbar_a>
         <Section>
           <ul>
-            <li>
+            <_li>
               <Link to={"/"} style={{ textDecoration: "none" }}>
                 <Nav_a>
                   <FontAwesomeIcon icon={faHouse} />
                   <Nav_span>홈</Nav_span>
                 </Nav_a>
               </Link>
-            </li>
-            <li>
+            </_li>
+            <_li>
               <Nav_a onClick={() => dispatch(titleAction.TodayBoxOffice())}>
                 <FontAwesomeIcon icon={faHouse} />
                 <Nav_span>일별 박스오피스</Nav_span>
               </Nav_a>
-            </li>
-            <li>
+            </_li>
+            <_li>
               <Nav_a onClick={() => dispatch(titleAction.WeekendBoxOffice())}>
                 <FontAwesomeIcon icon={faHouse} />
                 <Nav_span>주간 박스오피스</Nav_span>
               </Nav_a>
-            </li>
-
-            <_lightmodeli onClick={() => dispatch(toggleDarkModeAction.toggleDarkMode())}>
-              <_lightModeBtn>
-                <BsFillSunFill />
-                <_lightModeSpan>{isDarkMode ? "라이트모드" : "다크모드"}</_lightModeSpan>
-              </_lightModeBtn>
-            </_lightmodeli>
+            </_li>
           </ul>
+          <_lightmodeli onClick={() => dispatch(toggleDarkModeAction.toggleDarkMode())}>
+            <_lightModeBtn>
+              <BsFillSunFill />
+              <_lightModeSpan>{isDarkMode ? "라이트모드" : "다크모드"}</_lightModeSpan>
+            </_lightModeBtn>
+          </_lightmodeli>
         </Section>
       </NavbarDiv>
     </>
