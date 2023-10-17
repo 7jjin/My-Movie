@@ -14,15 +14,16 @@ import { useParams } from "react-router-dom";
 const _h1 = styled.h1`
   padding: 0px 40px;
   font-size: 20px;
+  margin-bottom: 25px;
 `;
 
 const _customSwiper = styled(Swiper)`
   position: initial;
-  background-color: black;
+  background-color: ${(props) => props.theme.swiperColor};
   .swiper-button-prev,
   .swiper-button-next {
     top: 93px;
-    color: white;
+    color: ${(props) => props.theme.color};
   }
   .swiper-button-next {
     right: 46px;

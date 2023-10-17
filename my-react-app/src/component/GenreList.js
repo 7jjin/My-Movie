@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { genreListAction } from "../store/genreButton";
 
 const _ul = styled.ul`
-  background: rgb(0, 0, 0);
+  background: ${(props) => props.theme.originBlack};
   padding: 16px 0px 8px;
   margin-bottom: 0px;
   list-style: none;
@@ -36,16 +36,6 @@ const _button = styled.button`
 `;
 
 export default function GenreList() {
-  // const [activeGenres, setActiveGenres] = useState([]);
-
-  // const handleButtonClick = (genre) => {
-  //   if (activeGenres.includes(genre)) {
-  //     setActiveGenres(activeGenres.filter((item) => item !== genre));
-  //   } else {
-  //     setActiveGenres([...activeGenres, genre]);
-  //   }
-  // };
-
   const genreList = useSelector((state) => state.genreList);
   const dispatch = useDispatch();
 

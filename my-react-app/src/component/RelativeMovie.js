@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 const _h1 = styled.h1`
   padding: 0px 40px;
   font-size: 20px;
+  margin-bottom: 25px;
 `;
 
 const _section = styled.section`

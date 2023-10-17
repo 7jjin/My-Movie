@@ -67,11 +67,11 @@ const _customSwiper = styled(Swiper)`
   }
   .swiper-button-prev {
     left: 12px !important;
-    top: 200px;
+    top: 55%;
   }
   .swiper-button-next {
     right: 46px !important;
-    top: 200px;
+    top: 55%;
   }
   .swiper-button-next:after {
     font-size: 10px;

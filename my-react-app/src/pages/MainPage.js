@@ -8,6 +8,7 @@ import { darkTheme, lightTheme, NavbarDark, NavbarLight } from "../component/the
 import isDarkMode from "../store/darkMode";
 
 const _MainPage = styled.div`
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   height: 100%;

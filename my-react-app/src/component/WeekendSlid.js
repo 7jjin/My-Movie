@@ -92,7 +92,7 @@ function getCurrentDate() {
   var day = date.getDate();
   day = day < 10 ? "0" + day.toString() : day.toString();
 
-  return year + month + day - 1;
+  return year + month + day - 2;
 }
 
 export default function WeekendSlid() {
@@ -142,7 +142,6 @@ export default function WeekendSlid() {
 
     getData();
   }, [now]);
-  console.log(weekendMovieList);
 
   return (
     <_customSwiper

@@ -13,15 +13,15 @@ import RelativeMovie from "../component/RelativeMovie";
 import GlobalStyles from "../component/GlobalStyles";
 import styled, { ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme, NavbarDark, NavbarLight } from "../component/theme";
-import isDarkMode from "../store/darkMode";
 
 const _MainPage = styled.div`
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   height: 100%;
   padding: 56px 0 0 240px;
-  background-color: black;
-  color: white;
+  background-color: ${(props) => props.theme.mainWrapper};
+  color: ${(props) => props.theme.color};
 `;
 
 const _movieInfos = styled.div`
@@ -48,7 +48,7 @@ const _titleDiv = styled.div`
 const _genreDiv = styled.div`
   display: flex;
   margin-top: 10px;
-  color: rgb(186, 186, 193);
+  color: ${(props) => props.theme.MovieDetailSpan};
   font-size: 15px;
   font-weight: 400;
   letter-spacing: 0px;
@@ -63,14 +63,14 @@ const _genreDiv = styled.div`
 
 const _subTitle = styled.div`
   margin-top: 10px;
-  color: rgb(186, 186, 193);
+  color: ${(props) => props.theme.MovieDetailSpan};
   font-size: 15px;
   font-weight: 400;
   letter-spacing: 0px;
   line-height: 20px;
   max-width: 600px;
   margin: 10px 0px 0px;
-  outline: 1px solid black;
+  outline: ${(props) => props.theme.movieDetailOutline};
   width: 630px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -90,7 +90,7 @@ const _ratingDiv = styled.div`
 
 const _actorDiv = styled.div`
   margin-top: 10px;
-  color: rgb(186, 186, 193);
+  color: ${(props) => props.theme.MovieDetailSpan};
   font-size: 15px;
   font-weight: 400;
 `;
@@ -137,7 +137,7 @@ export default function MovieDetail() {
     getMovies();
   }, []);
 
-  console.log(movieData);
+  // console.log(movieData);
   // RelativeMovie 컴포넌트로 전달할 props 객체 만들기
   const movieInfos = {};
 
@@ -148,7 +148,6 @@ export default function MovieDetail() {
     movieData.Data[0].Result &&
     movieData.Data[0].Result.length > 0
   ) {
-    console.log(movieData.Data[0].Result[0].nation);
     movieInfos.nation = movieData.Data[0].Result[0].nation;
     movieInfos.use = movieData.Data[0].Result[0].use;
     movieInfos.actor = movieData.Data[0].Result[0].actors.actor[0].actorNm;

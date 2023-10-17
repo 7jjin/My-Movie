@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import GenreList from "../component/GenreList";
 import Header from "../component/Header";
 import Navbar from "../component/Navbar";
-import styled from "styled-components";
 import axios from "axios";
 
 import { useDispatch, useSelector } from "react-redux";
 import { usMovieListAction } from "../store/UsMovie";
+import GlobalStyles from "../component/GlobalStyles";
+import styled, { ThemeProvider } from "styled-components";
+import { darkTheme, lightTheme, NavbarDark, NavbarLight } from "../component/theme";
 
 const _MainPage = styled.div`
   display: flex;
@@ -17,14 +19,29 @@ const _MainPage = styled.div`
 const _bigWrapper = styled.div`
   padding: 0px 40px;
   padding-top: 54px;
-  background-color: black;
-  color: white;
+  min-height: 100vh;
+  background-color: ${(props) => props.theme.originBlack};
   h1,
   h3 {
-    color: rgb(255, 255, 255);
+    color: ${(props) => props.theme.color};
   }
   h1 {
     font-weight: 800;
+    display: block;
+    font-size: 2em;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+  }
+  h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
   }
   hr {
     background-color: rgb(27, 28, 29);
@@ -69,6 +86,7 @@ const _img = styled.img`
 export default function KoreaMovie() {
   const { usMovieList } = useSelector((state) => state.usMovieList);
   const genreList = useSelector((state) => state.genreList);
+  const isDarkMode = useSelector((state) => state.app.isDarkMode);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -115,33 +133,36 @@ export default function KoreaMovie() {
   // console.log(japenMovieList);
   return (
     <>
-      <_MainPage>
-        <_bigWrapper className="BigWrapper">
-          <h1>미국 영화</h1>
-          <h3>장르선택</h3>
-          <hr />
-          <GenreList />
-          <_section>
-            <_ul>
-              {usMovieList
-                .filter((movie) => {
-                  // 선택한 장르 목록에 어떤 장르가 포함되어 있으면 해당 장르의 영화만 표시
-                  return genreList.length === 0 || genreList.includes(movie.genreAlt.split(",")[0]);
-                })
-                .filter((movie) => movie.poster)
-                .map((movie) => {
-                  return (
-                    <_li key={movie.rnum}>
-                      <_img src={movie.poster} />
-                    </_li>
-                  );
-                })}
-            </_ul>
-          </_section>
-        </_bigWrapper>
-      </_MainPage>
-      <Header />
-      <Navbar />
+      <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+        <GlobalStyles />
+        <_MainPage>
+          <_bigWrapper className="BigWrapper">
+            <h1>미국 영화</h1>
+            <h3>장르선택</h3>
+            <hr />
+            <GenreList />
+            <_section>
+              <_ul>
+                {usMovieList
+                  .filter((movie) => {
+                    // 선택한 장르 목록에 어떤 장르가 포함되어 있으면 해당 장르의 영화만 표시
+                    return genreList.length === 0 || genreList.includes(movie.genreAlt.split(",")[0]);
+                  })
+                  .filter((movie) => movie.poster)
+                  .map((movie) => {
+                    return (
+                      <_li key={movie.rnum}>
+                        <_img src={movie.poster} />
+                      </_li>
+                    );
+                  })}
+              </_ul>
+            </_section>
+          </_bigWrapper>
+        </_MainPage>
+        <Header />
+        <Navbar />
+      </ThemeProvider>
     </>
   );
 }

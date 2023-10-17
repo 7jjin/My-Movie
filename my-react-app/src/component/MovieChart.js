@@ -7,7 +7,7 @@ const _movieChartTitle = styled.span`
   font-size: 22px;
   line-height: 1.423em;
   font-weight: 700;
-  color: white;
+  color: ${(props) => props.theme.color};
 `;
 
 const _movieChartChart = styled.div`
@@ -16,7 +16,7 @@ const _movieChartChart = styled.div`
 `;
 
 const _movieChartWrapper = styled.div`
-  background-image: linear-gradient(to bottom, #000, rgb(255 255 255 / 80%));
+  background-image: ${(props) => props.theme.movieChart};
   padding-right: 40px;
   padding-left: 40px;
   position: relative;
