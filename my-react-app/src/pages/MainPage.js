@@ -13,6 +13,10 @@ const _MainPage = styled.div`
   flex-direction: column;
   height: 100%;
   padding: 56px 0 0 240px;
+  @media (max-width: 900px) {
+    padding-left: 0px;
+    padding-bottom: 58px;
+  }
 `;
 
 export default function MainPage() {

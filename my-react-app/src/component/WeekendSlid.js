@@ -18,6 +18,13 @@ const _movieImg = styled.img`
   border-radius: 15px;
   width: 80%;
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.09) 35%, rgba(0, 0, 0, 0.85));
+  @media (max-width: 1300px) {
+    height: 210px;
+  }
+  @media (max-width: 750px) {
+    height: 175px;
+    width: 83%;
+  }
 `;
 const _movieBox = styled.div`
   display: flex;
@@ -28,6 +35,12 @@ const _movieBox = styled.div`
   width: 80%;
   color: black;
   font-weight: 700;
+  @media (max-width: 750px) {
+    width: 83%;
+  }
+  @media (max-width: 500px) {
+    font-size: 11px;
+  }
 `;
 
 const _movieName = styled.span`
@@ -67,11 +80,23 @@ const _customSwiper = styled(Swiper)`
   }
   .swiper-button-prev {
     left: 12px !important;
-    top: 200px;
+    top: 55%;
+    @media (max-width: 500px) {
+      width: 30px;
+      height: 30px;
+    }
   }
   .swiper-button-next {
-    right: 46px !important;
-    top: 200px;
+    top: 55%;
+    right: 50px !important;
+    @media (max-width: 750px) {
+      right: 55px !important;
+    }
+    @media (max-width: 500px) {
+      right: 41px !important;
+      width: 30px;
+      height: 30px;
+    }
   }
   .swiper-button-next:after {
     font-size: 10px;
@@ -146,12 +171,34 @@ export default function WeekendSlid() {
   return (
     <_customSwiper
       modules={[Navigation, A11y]}
-      spaceBetween={30}
-      slidesPerView={5}
+      spaceBetween={0}
+      slidesPerView={1}
       navigation
-      slidesPerGroup={5} // 그룹 당 슬라이드 수 설정
+      slidesPerGroup={1} // 그룹 당 슬라이드 수 설정
       //   onSwiper={(swiper) => console.log(swiper)}
       onSlideChange={() => console.log("slide change")}
+      breakpoints={{
+        // 1300px 이상일 때
+        1300: {
+          slidesPerView: 5,
+          spaceBetween: 30,
+        },
+        // 1024px 이상일 때
+        1024: {
+          slidesPerView: 4,
+          spaceBetween: 10,
+          slidesPerGroup: 4, // 그룹 당 슬라이드 수 설정
+        },
+        // 768px 이상일 때
+        750: {
+          slidesPerView: 3,
+          slidesPerGroup: 3, // 그룹 당 슬라이드 수 설정
+        },
+        375: {
+          slidesPerView: 2,
+          slidesPerGroup: 2, // 그룹 당 슬라이드 수 설정
+        },
+      }}
     >
       {weekendMovieList.map((movie) => {
         return (

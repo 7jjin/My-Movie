@@ -8,6 +8,9 @@ const _movieChartTitle = styled.span`
   line-height: 1.423em;
   font-weight: 700;
   color: ${(props) => props.theme.color};
+  @media (max-width: 500px) {
+    font-size: 17px;
+  }
 `;
 
 const _movieChartChart = styled.div`

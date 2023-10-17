@@ -5,6 +5,9 @@ const _h1Wrapper = styled.div`
   margin: 54px 0 0;
   padding-right: 40px;
   padding-left: 40px;
+  @media (max-width: 900px) {
+    margin-top: 20px;
+  }
 `;
 
 const _h1 = styled.h1`
@@ -14,6 +17,9 @@ const _h1 = styled.h1`
   font-weight: 800;
   letter-spacing: 0px;
   line-height: 40px;
+  @media (max-width: 500px) {
+    font-size: 25px;
+  }
 `;
 
 const _hr = styled.hr`

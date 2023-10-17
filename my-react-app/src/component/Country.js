@@ -4,6 +4,9 @@ const _CountryWrapper = styled.div`
   padding-right: 40px;
   padding-left: 40px;
   margin-top: 40px;
+  @media (max-width: 500px) {
+    padding-bottom: 40px;
+  }
 `;
 
 const _title = styled.div`
@@ -21,6 +24,12 @@ const _countryBox = styled.div`
     width: 23%;
     height: 165px;
     border-radius: 10px;
+    @media (max-width: 750px) {
+      height: 140px;
+    }
+    @media (max-width: 500px) {
+      height: 80px;
+    }
   }
 `;
 

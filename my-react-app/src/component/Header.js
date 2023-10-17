@@ -2,6 +2,7 @@ import ReactDOM from "react-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-regular-svg-icons";
 import styled from "styled-components";
+import JINCHA_LOGO from "../img/JINCHA_LOGO.png";
 
 const WrapperBox = styled.div`
   display: flex;
@@ -14,6 +15,11 @@ const WrapperBox = styled.div`
   left: 0;
   z-index: 500;
   width: 100%;
+
+  @media (max-width: 900px) {
+    justify-content: space-between;
+    flex-direction: row;
+  }
 `;
 
 const UlTag = styled.ul`
@@ -53,10 +59,29 @@ const SignInButton = styled.button`
   border: none;
 `;
 
+const Navbar_a = styled.a`
+  display: block;
+  margin: 24px 0 0 26px;
+  text-decoration: none;
+  display: none;
+  @media (max-width: 900px) {
+    display: block;
+    margin-top: 14px;
+  }
+`;
+const Navbar_img = styled.img`
+  vertical-align: top;
+  width: 88px;
+  height: 26px;
+`;
+
 export default function Header() {
   return (
     <>
       <WrapperBox>
+        <Navbar_a>
+          <Navbar_img src={JINCHA_LOGO}></Navbar_img>
+        </Navbar_a>
         <UlTag>
           <li>
             <FontAwesomeIcon icon={faBell} />
