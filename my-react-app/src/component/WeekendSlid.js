@@ -171,7 +171,7 @@ export default function WeekendSlid() {
   return (
     <_customSwiper
       modules={[Navigation, A11y]}
-      spaceBetween={0}
+      spaceBetween={10}
       slidesPerView={1}
       navigation
       slidesPerGroup={1} // 그룹 당 슬라이드 수 설정

@@ -33,6 +33,12 @@ const _button = styled.button`
   cursor: pointer;
   border: 0 none transparent;
   outline: none 0;
+  @media (max-width: 700px) {
+    font-size: 11px;
+  }
+  @media (max-width: 500px) {
+    padding: 4px 8px;
+  }
 `;
 
 export default function GenreList() {

@@ -22,18 +22,35 @@ const _MainPage = styled.div`
   padding: 56px 0 0 240px;
   background-color: ${(props) => props.theme.mainWrapper};
   color: ${(props) => props.theme.color};
+  @media (max-width: 900px) {
+    padding-left: 0px;
+  }
 `;
 
 const _movieInfos = styled.div`
   display: flex;
   padding: 0px 40px 30px;
   margin-top: 100px;
+  @media (max-width: 900px) {
+    margin-top: 50px;
+  }
+  @media (max-width: 700px) {
+    flex-direction: column;
+    .imgBox {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+  }
 `;
 
 const _postDiv = styled.div`
   width: 169px;
   height: 247px;
   margin-right: 40px;
+  @media (max-width: 700px) {
+    margin-right: 0px;
+  }
 `;
 
 const _img = styled.img`
@@ -43,6 +60,9 @@ const _img = styled.img`
 const _titleDiv = styled.div`
   font-size: 45px;
   font-weight: 700;
+  @media (max-width: 500px) {
+    font-size: 20px;
+  }
 `;
 
 const _genreDiv = styled.div`
@@ -59,6 +79,12 @@ const _genreDiv = styled.div`
     font-size: 1px;
     margin: 0px 5px;
   }
+  @media (max-width: 700px) {
+    justify-content: center;
+  }
+  @media (max-width: 500px) {
+    font-size: 12px;
+  }
 `;
 
 const _subTitle = styled.div`
@@ -71,7 +97,7 @@ const _subTitle = styled.div`
   max-width: 600px;
   margin: 10px 0px 0px;
   outline: ${(props) => props.theme.movieDetailOutline};
-  width: 630px;
+  width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
@@ -82,6 +108,9 @@ const _subTitle = styled.div`
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+  @media (max-width: 500px) {
+    font-size: 12px;
+  }
 `;
 
 const _ratingDiv = styled.div`
@@ -93,6 +122,9 @@ const _actorDiv = styled.div`
   color: ${(props) => props.theme.MovieDetailSpan};
   font-size: 15px;
   font-weight: 400;
+  @media (max-width: 500px) {
+    font-size: 12px;
+  }
 `;
 
 const _sectionDiv = styled.section`
@@ -109,6 +141,9 @@ const _playButton = styled.button`
   &:hover {
     background: rgb(255, 61, 110);
   }
+  @media (max-width: 500px) {
+    padding: 5px 8px;
+  }
 `;
 const _playButtonInnerDiv = styled.div`
   display: flex;
@@ -116,6 +151,12 @@ const _playButtonInnerDiv = styled.div`
 `;
 const _playButtonSvg = styled.div`
   margin-right: 5px;
+`;
+
+const _infos = styled.div`
+  @media (max-width: 700px) {
+    text-align: center;
+  }
 `;
 
 export default function MovieDetail() {
@@ -172,7 +213,7 @@ export default function MovieDetail() {
                   </_postDiv>
                 </section>
                 <section className="infoBox">
-                  <div className="infos">
+                  <_infos className="infos">
                     <_titleDiv className="title">
                       <span>{movieName}</span>
                     </_titleDiv>
@@ -217,7 +258,7 @@ export default function MovieDetail() {
                     <_subTitle className="subtitle">
                       <span>{value.Result[0].plots.plot[0].plotText}</span>
                     </_subTitle>
-                  </div>
+                  </_infos>
                 </section>
               </_movieInfos>
             );

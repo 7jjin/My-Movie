@@ -98,12 +98,13 @@ const _lightmodeli = styled.li`
   box-sizing: border-box;
   padding: 0px 16px;
   left: 0px;
-  width: 100%;
+  width: 85%;
   bottom: 30px;
   position: absolute;
   display: flex;
   padding: 9px 12px;
-  padding-left: 20px;
+  margin: 0px 16px;
+
   color: #d4d7db;
   cursor: pointer;
   @media (max-width: 900px) {
@@ -148,7 +149,7 @@ const _lightModeBtn = styled.button`
   background: ${(props) => props.theme.bgColor};
   border: none;
   color: ${(props) => props.theme.color};
-  font-size: 20px;
+  font-size: 16px;
   display: flex;
   align-items: center;
 `;

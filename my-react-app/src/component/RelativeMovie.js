@@ -10,6 +10,9 @@ const _h1 = styled.h1`
 
 const _section = styled.section`
   padding: 0px 40px;
+  @media (max-width: 900px) {
+    margin-bottom: 80px;
+  }
 `;
 
 const _ul = styled.ul`

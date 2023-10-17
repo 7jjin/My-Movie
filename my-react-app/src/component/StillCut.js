@@ -24,12 +24,21 @@ const _customSwiper = styled(Swiper)`
   .swiper-button-next {
     top: 93px;
     color: ${(props) => props.theme.color};
+    @media (max-width: 900px) {
+      top: 60px !important;
+    }
   }
   .swiper-button-next {
     right: 46px;
   }
   .swiper-button-prev {
     left: 20px;
+  }
+  .swiper-button-next:after,
+  .swiper-button-prev:after {
+    @media (max-width: 500px) {
+      font-size: 24px;
+    }
   }
 `;
 
@@ -40,6 +49,12 @@ const _swiperWrapper = styled.div`
     transition-timing-function: linear !important;
     transition-duration: 500ms !important;
   }
+  @media (max-width: 900px) {
+    margin-bottom: 50px;
+  }
+  @media (max-width: 500px) {
+    margin-bottom: 70px;
+  }
 `;
 
 const _stillImg = styled.img`
@@ -47,6 +62,9 @@ const _stillImg = styled.img`
   border-radius: 15px;
   width: 80%;
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.09) 35%, rgba(0, 0, 0, 0.85));
+  @media (max-width: 900px) {
+    height: 100px;
+  }
 `;
 
 export default function StillCut() {
@@ -87,6 +105,28 @@ export default function StillCut() {
           }}
           onSwiper={(swiper) => {
             swiper.autoplay.start(); // 렌더링 후에 Autoplay를 시작합니다.
+          }}
+          breakpoints={{
+            // 1300px 이상일 때
+            1300: {
+              slidesPerView: 5,
+              spaceBetween: 30,
+            },
+            // 1024px 이상일 때
+            1024: {
+              slidesPerView: 4,
+              spaceBetween: 10,
+              slidesPerGroup: 4, // 그룹 당 슬라이드 수 설정
+            },
+            // 768px 이상일 때
+            750: {
+              slidesPerView: 3,
+              slidesPerGroup: 3, // 그룹 당 슬라이드 수 설정
+            },
+            375: {
+              slidesPerView: 2,
+              slidesPerGroup: 2, // 그룹 당 슬라이드 수 설정
+            },
           }}
         >
           {movieData.map((imageUrl, index) => (
