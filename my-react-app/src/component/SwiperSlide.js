@@ -132,7 +132,7 @@ export default function MainSlide() {
     const getData = async () => {
       const res = await axios({
         method: "GET",
-        url: `http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=4c5de9e925edf65fae959e9305f483ce&targetDt=${now}`,
+        url: `https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=4c5de9e925edf65fae959e9305f483ce&targetDt=${now}`,
       });
 
       const boxOfficeMovies = res.data.boxOfficeResult.dailyBoxOfficeList;
@@ -153,7 +153,7 @@ export default function MainSlide() {
       try {
         const json = await axios({
           method: "GET",
-          url: `http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&detail=Y&title=${
+          url: `https://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&detail=Y&title=${
             movie.movieNm
           }&releaseDts=${movie.openDt.replaceAll("-", "")}&ServiceKey=EP520Y4JRPI6ZC781VKW`,
         });

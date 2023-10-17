@@ -110,7 +110,7 @@ export default function KoreaMovie() {
       try {
         const res = await axios({
           method: "GET",
-          url: `http://kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json?key=f5eef3421c602c6cb7ea224104795888&repNationCd=22042002&movieTypeCd=220101&openStartDt=2010&openEndDt=2022&itemPerPage=100`,
+          url: `https://kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json?key=f5eef3421c602c6cb7ea224104795888&repNationCd=22042002&movieTypeCd=220101&openStartDt=2010&openEndDt=2022&itemPerPage=100`,
         });
         console.log(res.data);
         const movieList = res.data.movieListResult.movieList;
@@ -133,7 +133,7 @@ export default function KoreaMovie() {
       try {
         const json = await axios({
           method: "GET",
-          url: `http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&detail=Y&title=${
+          url: `https://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&detail=Y&title=${
             movie.movieNm
           }&releaseDts=${movie.openDt.replaceAll("-", "")}&ServiceKey=EP520Y4JRPI6ZC781VKW`,
         });

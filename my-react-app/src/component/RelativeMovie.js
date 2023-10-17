@@ -51,7 +51,7 @@ export default function RelativeMovie(props) {
       try {
         const res = await axios({
           method: "GET",
-          url: `http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&listCount=15&sort=RANK,1&detail=Y&nation=${nation}&use=${use}&actor=${actor}&ServiceKey=EP520Y4JRPI6ZC781VKW`,
+          url: `https://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&listCount=15&sort=RANK,1&detail=Y&nation=${nation}&use=${use}&actor=${actor}&ServiceKey=EP520Y4JRPI6ZC781VKW`,
         });
 
         const newPosts = res.data.Data[0].Result.map((value) => {

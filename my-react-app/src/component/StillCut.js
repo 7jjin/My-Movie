@@ -75,7 +75,7 @@ export default function StillCut() {
     const getMovies = async () => {
       try {
         const response = await axios.get(
-          `http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&detail=Y&title=${movieName}&releaseDts=${openDate}&ServiceKey=EP520Y4JRPI6ZC781VKW`
+          `https://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&detail=Y&title=${movieName}&releaseDts=${openDate}&ServiceKey=EP520Y4JRPI6ZC781VKW`
         );
         const jsonData = response.data.Data[0].Result[0];
         const imageUrls = jsonData.stlls.split("|");
