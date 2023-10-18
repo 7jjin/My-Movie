@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-regular-svg-icons";
 import styled from "styled-components";
 import JINCHA_LOGO from "../img/JINCHA_LOGO.png";
+import { Link } from "react-router-dom";
+import React, { useState } from "react";
 
 const WrapperBox = styled.div`
   display: flex;
@@ -76,6 +78,12 @@ const Navbar_img = styled.img`
 `;
 
 export default function Header() {
+  const [isLogin, setIsLogin] = useState(!!localStorage.getItem("isLogin"));
+  console.log(isLogin);
+  const logout = () => {
+    localStorage.clear();
+    setIsLogin(false); // 로그아웃 시 상태를 업데이트하여 리렌더링
+  };
   return (
     <>
       <WrapperBox>
@@ -86,12 +94,27 @@ export default function Header() {
           <li>
             <FontAwesomeIcon icon={faBell} />
           </li>
-          <li>
-            <LoginBtn>로그인</LoginBtn>
-          </li>
-          <li>
-            <SignInButton>회원가입</SignInButton>
-          </li>
+          {isLogin && (
+            <li>
+              <LoginBtn onClick={logout}>로그아웃</LoginBtn>
+            </li>
+          )}
+
+          {!isLogin && (
+            <li>
+              <Link to="/signup">
+                <SignInButton>회원가입</SignInButton>
+              </Link>
+            </li>
+          )}
+
+          {!isLogin && (
+            <li>
+              <Link to="/login">
+                <LoginBtn>로그인</LoginBtn>
+              </Link>
+            </li>
+          )}
         </UlTag>
       </WrapperBox>
     </>
