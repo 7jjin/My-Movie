@@ -12,6 +12,7 @@ const _imgWrapper = styled.div`
   position: fixed;
   top: 0px;
   left: 0px;
+  background-size: cover !important;
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
     url(https://an2-img.amz.wtchn.net/image/v2/v_rtGmsGmmSGuScg0hC76g.webp?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1KbklsMHNJbkFpT2lJdmRqSXZjM1J2Y21VdmFXMWhaMlV2TVRZNE5Ea3hOVGN4T1RJM05UQTVOVGs0TXlKOS5mRjlhcmYwZWNJd2cyNUl4YnBfZkZyV0E5UmpkMnhLdmVEUnhUUU1jUXN3);
   width: 100%;
@@ -196,10 +197,10 @@ export default function SignupPage() {
     handleSubmit,
     formState: { errors, isDirty, isValid },
     watch,
-  } = useForm();
+  } = useForm({ mode: "onChange" });
   const navigate = useNavigate();
 
-  const watchFields = watch(["name", "email", "password"]);
+  const [nameWatch, emailWatch, passWatch] = watch(["name", "email", "password"]);
 
   const onSubmit = (data) => {
     const email = localStorage.getItem("email");
@@ -212,8 +213,7 @@ export default function SignupPage() {
       alert("로그인에 실패하셨습니다.");
     }
   };
-  //   console.log("isDiary", isDirty);
-  console.log("isValid", isValid);
+
   return (
     <>
       <section className="login">
@@ -247,7 +247,13 @@ export default function SignupPage() {
                         },
                       })}
                     ></_inputEmail>
-                    {errors.email ? <_inValidIcon></_inValidIcon> : <_VliadIcon></_VliadIcon>}
+                    {emailWatch === undefined || emailWatch === "" ? (
+                      ""
+                    ) : errors.email ? (
+                      <_inValidIcon></_inValidIcon>
+                    ) : (
+                      <_VliadIcon></_VliadIcon>
+                    )}
                   </_inputBox>
                   <_inputBox className="pw">
                     <_inputPw
@@ -261,7 +267,13 @@ export default function SignupPage() {
                         },
                       })}
                     ></_inputPw>
-                    {errors.password ? <_inValidIcon></_inValidIcon> : <_VliadIcon></_VliadIcon>}
+                    {passWatch === undefined || passWatch === "" ? (
+                      ""
+                    ) : errors.password ? (
+                      <_inValidIcon></_inValidIcon>
+                    ) : (
+                      <_VliadIcon></_VliadIcon>
+                    )}
                   </_inputBox>
                   <_btnDiv>
                     {isValid ? <_btnOn type="submit">로그인</_btnOn> : <_btnOff type="submit">로그인</_btnOff>}

@@ -8,7 +8,7 @@ const _main = styled.main`
 
 const _imgWrapper = styled.div`
   height: 100vh;
-
+  background-size: cover !important;
   position: fixed;
   top: 0px;
   left: 0px;
@@ -197,28 +197,27 @@ export default function SignupPage() {
   const {
     register,
     handleSubmit,
+    trigger,
     formState: { errors, isDirty, isValid },
     watch,
-  } = useForm();
+  } = useForm({ mode: "onChange" });
 
   const navigate = useNavigate();
 
-  const watchFields = watch(["name", "email", "password"]);
+  const [nameWatch, emailWatch, passWatch] = watch(["name", "email", "password"]);
 
   const ValidMessage = () => {
     alert("회원가입이 성공하셨습니다.");
   };
 
   const onSubmit = (data) => {
-    console.log("valid", data);
     localStorage.setItem("name", data.name);
     localStorage.setItem("email", data.email);
     localStorage.setItem("password", data.password);
     ValidMessage();
     navigate("/login");
   };
-  //   console.log("isDiary", isDirty);
-  console.log("isValid", isValid);
+
   return (
     <>
       <section className="login">
@@ -249,7 +248,13 @@ export default function SignupPage() {
                         minLength: { message: "최소 2글자 이상 작성해주세요", value: 2 },
                       })}
                     ></_inputName>
-                    {errors.name ? <_inValidIcon></_inValidIcon> : <_VliadIcon></_VliadIcon>}
+                    {nameWatch === undefined || nameWatch === "" ? (
+                      ""
+                    ) : errors.name ? (
+                      <_inValidIcon></_inValidIcon>
+                    ) : (
+                      <_VliadIcon></_VliadIcon>
+                    )}
                   </_inputBox>
                   <_inputBox className="email">
                     <_inputEmail
@@ -263,7 +268,13 @@ export default function SignupPage() {
                         },
                       })}
                     ></_inputEmail>
-                    {errors.email ? <_inValidIcon></_inValidIcon> : <_VliadIcon></_VliadIcon>}
+                    {emailWatch === undefined || emailWatch === "" ? (
+                      ""
+                    ) : errors.email ? (
+                      <_inValidIcon></_inValidIcon>
+                    ) : (
+                      <_VliadIcon></_VliadIcon>
+                    )}
                   </_inputBox>
                   <_inputBox className="pw">
                     <_inputPw
@@ -277,7 +288,13 @@ export default function SignupPage() {
                         },
                       })}
                     ></_inputPw>
-                    {errors.password ? <_inValidIcon></_inValidIcon> : <_VliadIcon></_VliadIcon>}
+                    {passWatch === undefined || passWatch === "" ? (
+                      ""
+                    ) : errors.password ? (
+                      <_inValidIcon></_inValidIcon>
+                    ) : (
+                      <_VliadIcon></_VliadIcon>
+                    )}
                   </_inputBox>
                   <_btnDiv>
                     {isValid ? (

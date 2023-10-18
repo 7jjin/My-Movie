@@ -117,7 +117,7 @@ function getCurrentDate() {
   var day = date.getDate();
   day = day < 10 ? "0" + day.toString() : day.toString();
 
-  return year + month + day - 2;
+  return year + month + day - 7;
 }
 
 export default function WeekendSlid() {
