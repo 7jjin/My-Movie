@@ -172,9 +172,9 @@ export default function WeekendSlid() {
     <_customSwiper
       modules={[Navigation, A11y]}
       spaceBetween={10}
-      slidesPerView={1}
+      slidesPerView={5}
       navigation
-      slidesPerGroup={1} // 그룹 당 슬라이드 수 설정
+      slidesPerGroup={5} // 그룹 당 슬라이드 수 설정
       //   onSwiper={(swiper) => console.log(swiper)}
       onSlideChange={() => console.log("slide change")}
       breakpoints={{

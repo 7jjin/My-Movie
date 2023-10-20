@@ -94,11 +94,12 @@ export default function StillCut() {
         <_customSwiper
           modules={[Navigation, Pagination, Autoplay]}
           spaceBetween={10}
-          slidesPerView={5}
+          slidesPerView={1}
+          slidesPerGroup={1} // 그룹 당 슬라이드 수 설정
           navigation
           autoplay={{
             delay: 2000,
-            disableOnInteraction: false,
+            // disableOnInteraction: false,
             loop: true,
             loopAdditionalSlides: 1,
             pauseOnMouseEnter: true,
@@ -116,16 +117,13 @@ export default function StillCut() {
             1024: {
               slidesPerView: 4,
               spaceBetween: 10,
-              slidesPerGroup: 4, // 그룹 당 슬라이드 수 설정
             },
             // 768px 이상일 때
             750: {
               slidesPerView: 3,
-              slidesPerGroup: 3, // 그룹 당 슬라이드 수 설정
             },
             375: {
               slidesPerView: 2,
-              slidesPerGroup: 2, // 그룹 당 슬라이드 수 설정
             },
           }}
         >

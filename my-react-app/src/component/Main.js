@@ -7,7 +7,7 @@ import Country from "./Country";
 
 const _mainWrapper = styled.div`
   padding-bottom: 32px;
-
+  height: 100vh;
   background-color: ${(props) => props.theme.mainWrapper};
   color: white;
 `;

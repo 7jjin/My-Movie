@@ -229,7 +229,6 @@ export default function Navbar() {
             <_li isSmallScreen={isSmallScreen}>
               <Nav_a onClick={() => dispatch(titleAction.WeekendBoxOffice())}>
                 <FontAwesomeIcon icon={faHouse} />
-
                 <Nav_span className="full-text">주간 박스오피스</Nav_span>
                 <Nav_span className="short-text">주간</Nav_span>
               </Nav_a>
