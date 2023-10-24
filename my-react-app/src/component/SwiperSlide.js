@@ -128,11 +128,15 @@ export default function MainSlide() {
   let now = getCurrentDate();
 
   useEffect(() => {
+    console.log(process.env.REACT_APP_BOXOFFICE_SECRETKEY);
+    console.log(
+      `https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=${process.env.REACT_APP_BOXOFFICE_SECRETKEY}&targetDt=${now}`
+    );
     // 박스오피스 영화 데이터 가져오는 함수
     const getData = async () => {
       const res = await axios({
         method: "GET",
-        url: `https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=4c5de9e925edf65fae959e9305f483ce&targetDt=${now}`,
+        url: `https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=${process.env.REACT_APP_BOXOFFICE_SECRETKEY}&targetDt=${now}`,
       });
 
       const boxOfficeMovies = res.data.boxOfficeResult.dailyBoxOfficeList;
@@ -155,7 +159,7 @@ export default function MainSlide() {
           method: "GET",
           url: `https://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&detail=Y&title=${
             movie.movieNm
-          }&releaseDts=${movie.openDt.replaceAll("-", "")}&ServiceKey=EP520Y4JRPI6ZC781VKW`,
+          }&releaseDts=${movie.openDt.replaceAll("-", "")}&ServiceKey=${process.env.REACT_APP_POSTERS_SECRETKEY}`,
         });
         const posterURL = json.data.Data[0].Result[0].posters.split("|")[0];
         const title = json.data.Data[0].Result[0].title;

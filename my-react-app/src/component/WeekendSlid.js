@@ -132,7 +132,7 @@ export default function WeekendSlid() {
     const getData = async () => {
       const res = await axios({
         method: "GET",
-        url: `https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchWeeklyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt=${now}&weekGb=0`,
+        url: `https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchWeeklyBoxOfficeList.json?key=${process.env.REACT_APP_BOXOFFICE_SECRETKEY}&targetDt=${now}&weekGb=0`,
       });
 
       const boxOfficeMovies = res.data.boxOfficeResult.weeklyBoxOfficeList;
@@ -155,7 +155,7 @@ export default function WeekendSlid() {
           method: "GET",
           url: `https://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&detail=Y&title=${
             movie.movieNm
-          }&releaseDts=${movie.openDt.replaceAll("-", "")}&ServiceKey=EP520Y4JRPI6ZC781VKW`,
+          }&releaseDts=${movie.openDt.replaceAll("-", "")}&ServiceKey=${process.env.REACT_APP_POSTERS_SECRETKEY}`,
         });
         const posterURL = json.data.Data[0].Result[0].posters.split("|")[0];
         const title = json.data.Data[0].Result[0].title;
