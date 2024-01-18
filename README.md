@@ -1,7 +1,6 @@
 # 🔥JinCha🔥  
 <p align="center">
-  <img src="https://github.com/7jjin/My-Movie/assets/101184549/b603c9f2-cfbe-4863-9c2e-26a4f7c5444f  
-"width="100%">
+  <img src="https://github.com/7jjin/My-Movie/assets/101184549/b603c9f2-cfbe-4863-9c2e-26a4f7c5444f">
 </p>
  
 
