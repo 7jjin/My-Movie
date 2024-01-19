@@ -23,12 +23,13 @@ JinCha는 왓챠를 토대로 만든 영화 사이트입니다. React와 Styled-
 ### **기술 스택**
 
 **Front-End**
+
 ![javascript](https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![react](https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![styled-components](https://img.shields.io/badge/Styledcomponent-DB7093?style=for-the-badge&logo=styled-components&logoColor=black)
 ![Redux](https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=black)
-![React-Hook-Form](https://img.shields.io/badge/React Hook Form-EC5990?style=for-the-badge&logo=React-Hook-Form&logoColor=black)
-![React-Router](https://img.shields.io/badge/React Router-CA4245?style=for-the-badge&logo=React-Router&logoColor=black)
+![React-Hook-Form](https://img.shields.io/badge/ReactHookForm-EC5990?style=for-the-badge&logo=React-Hook-Form&logoColor=black)
+![React-Router](https://img.shields.io/badge/ReactRouter-CA4245?style=for-the-badge&logo=React-Router&logoColor=black)
 
 ### **시작하기**
 
