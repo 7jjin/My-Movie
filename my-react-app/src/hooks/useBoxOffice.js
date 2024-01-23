@@ -1,9 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import axios from "axios";
 import { WeekendMovieChartAction } from "../store/weekendMovieChart";
 import { TodayMovieChartAction } from "../store/todayMovieChart";
 import getCurrentDate from "../libs/date";
-import { BsReplyAll } from "react-icons/bs";
 import { koreaMovieListAction } from "../store/koreaMovie";
 import { japenMovieListAction } from "../store/japenMovie";
 import { etcMovieListAction } from "../store/etcMovie";
@@ -11,6 +10,9 @@ import { usMovieListAction } from "../store/UsMovie";
 
 // 박스오피스 정보를 불러오는 Hook
 const useBoxOffice = (dispatch, url, sortedMovie) => {
+  // 날짜 메모이제이션
+  const currentDate = useMemo(() => getCurrentDate(), []);
+
   useEffect(() => {
     const getMovie = async () => {
       try {
@@ -38,6 +40,8 @@ const useBoxOffice = (dispatch, url, sortedMovie) => {
             break;
           case "etcMovieList":
             movieList = res.data.movieListResult.movieList;
+            break;
+          default:
             break;
         }
 
@@ -68,6 +72,8 @@ const useBoxOffice = (dispatch, url, sortedMovie) => {
           case "etcMovieList":
             dispatch(etcMovieListAction.isLoading(updatedMovieList));
             break;
+          default:
+            break;
         }
       } catch (error) {
         console.error("Error fetching box office data:", error);
@@ -90,7 +96,7 @@ const useBoxOffice = (dispatch, url, sortedMovie) => {
       }
     };
     getMovie();
-  }, [getCurrentDate]);
+  }, [currentDate]);
 };
 
 export default useBoxOffice;

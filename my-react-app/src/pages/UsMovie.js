@@ -1,16 +1,58 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import GenreList from "../component/GenreList";
 import Header from "../component/Header";
 import Navbar from "../component/Navbar";
-import axios from "axios";
 
 import { useDispatch, useSelector } from "react-redux";
-import { usMovieListAction } from "../store/UsMovie";
 import GlobalStyles from "../component/GlobalStyles";
 import styled, { ThemeProvider } from "styled-components";
-import { darkTheme, lightTheme, NavbarDark, NavbarLight } from "../component/theme";
+import { darkTheme, lightTheme } from "../component/theme";
 import useBoxOffice from "../hooks/useBoxOffice";
 
+export default function KoreaMovie() {
+  const { usMovieList } = useSelector((state) => state.usMovieList);
+  const genreList = useSelector((state) => state.genreList);
+  const isDarkMode = useSelector((state) => state.app.isDarkMode);
+  const url = `https://kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json?key=f5eef3421c602c6cb7ea224104795888&repNationCd=22042002&movieTypeCd=220101&openStartDt=2010&openEndDt=2022&itemPerPage=100`;
+
+  const dispatch = useDispatch();
+  useBoxOffice(dispatch, url, "usMovieList");
+
+  return (
+    <>
+      <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+        <GlobalStyles />
+        <_MainPage>
+          <_bigWrapper className="BigWrapper">
+            <h1>미국 영화</h1>
+            <h3>장르선택</h3>
+            <hr />
+            <GenreList />
+            <_section>
+              <_ul>
+                {usMovieList
+                  .filter((movie) => {
+                    // 선택한 장르 목록에 어떤 장르가 포함되어 있으면 해당 장르의 영화만 표시
+                    return genreList.length === 0 || genreList.includes(movie.genreAlt.split(",")[0]);
+                  })
+                  .filter((movie) => movie.poster)
+                  .map((movie) => {
+                    return (
+                      <_li key={movie.rnum}>
+                        <_img src={movie.poster} />
+                      </_li>
+                    );
+                  })}
+              </_ul>
+            </_section>
+          </_bigWrapper>
+        </_MainPage>
+        <Header />
+        <Navbar />
+      </ThemeProvider>
+    </>
+  );
+}
 const _MainPage = styled.div`
   display: flex;
   flex-direction: column;
@@ -99,48 +141,3 @@ const _img = styled.img`
   width: 100%;
   border-radius: 5px;
 `;
-
-export default function KoreaMovie() {
-  const { usMovieList } = useSelector((state) => state.usMovieList);
-  const genreList = useSelector((state) => state.genreList);
-  const isDarkMode = useSelector((state) => state.app.isDarkMode);
-  const url = `https://kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json?key=f5eef3421c602c6cb7ea224104795888&repNationCd=22042002&movieTypeCd=220101&openStartDt=2010&openEndDt=2022&itemPerPage=100`;
-
-  const dispatch = useDispatch();
-  useBoxOffice(dispatch, url, "usMovieList");
-
-  return (
-    <>
-      <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-        <GlobalStyles />
-        <_MainPage>
-          <_bigWrapper className="BigWrapper">
-            <h1>미국 영화</h1>
-            <h3>장르선택</h3>
-            <hr />
-            <GenreList />
-            <_section>
-              <_ul>
-                {usMovieList
-                  .filter((movie) => {
-                    // 선택한 장르 목록에 어떤 장르가 포함되어 있으면 해당 장르의 영화만 표시
-                    return genreList.length === 0 || genreList.includes(movie.genreAlt.split(",")[0]);
-                  })
-                  .filter((movie) => movie.poster)
-                  .map((movie) => {
-                    return (
-                      <_li key={movie.rnum}>
-                        <_img src={movie.poster} />
-                      </_li>
-                    );
-                  })}
-              </_ul>
-            </_section>
-          </_bigWrapper>
-        </_MainPage>
-        <Header />
-        <Navbar />
-      </ThemeProvider>
-    </>
-  );
-}
