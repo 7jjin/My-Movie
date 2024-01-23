@@ -10,7 +10,7 @@ const etcMovieListSlice = createSlice({
   name: "etcMovieList",
   initialState: initetcMovieList,
   reducers: {
-    isLoding(state, action) {
+    isLoading(state, action) {
       state.etcMovieList = action.payload;
     },
   },

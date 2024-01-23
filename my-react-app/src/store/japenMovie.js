@@ -10,7 +10,7 @@ const japenMovieListSlice = createSlice({
   name: "japenMovieList",
   initialState: initjapenMovieList,
   reducers: {
-    isLoding(state, action) {
+    isLoading(state, action) {
       state.japenMovieList = action.payload;
     },
   },
