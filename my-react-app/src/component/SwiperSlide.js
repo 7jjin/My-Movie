@@ -1,17 +1,13 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
-import axios from "axios";
-
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-
 import styled from "styled-components";
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { TodayMovieChartAction } from "../store/todayMovieChart";
+import useBoxOffice from "../hooks/useBoxOffice";
 
 const _movieImg = styled.img`
   height: 234px;
@@ -107,70 +103,12 @@ const _customSwiper = styled(Swiper)`
   }
 `;
 
-// 날짜를 YYYY/MM/DD형식으로 바꾸기
-function getCurrentDate() {
-  var date = new Date();
-  var year = date.getFullYear().toString();
-  var month = date.getMonth() + 1;
-  month = month < 10 ? "0" + month.toString() : month.toString();
-
-  var day = date.getDate();
-  day = day < 10 ? "0" + day.toString() : day.toString();
-
-  return year + month + day - 1;
-}
-
 export default function MainSlide() {
   const { todayMovieList } = useSelector((state) => state.todayMovieChart);
-
   const dispatch = useDispatch();
+  const isDaily = true;
 
-  let now = getCurrentDate();
-
-  useEffect(() => {
-    console.log(process.env.REACT_APP_BOXOFFICE_SECRETKEY);
-    console.log(
-      `https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=${process.env.REACT_APP_BOXOFFICE_SECRETKEY}&targetDt=${now}`
-    );
-    // 박스오피스 영화 데이터 가져오는 함수
-    const getData = async () => {
-      const res = await axios({
-        method: "GET",
-        url: `https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=${process.env.REACT_APP_BOXOFFICE_SECRETKEY}&targetDt=${now}`,
-      });
-
-      const boxOfficeMovies = res.data.boxOfficeResult.dailyBoxOfficeList;
-
-      // 각 영화에 대해 getMovies 함수를 호출
-      const moviePromises = boxOfficeMovies.map((movie) => getMovies(movie));
-      const moviesWithPosters = await Promise.all(moviePromises);
-
-      const updatedMovieList = boxOfficeMovies.map((movie, index) => ({
-        ...movie,
-        poster: moviesWithPosters[index],
-      }));
-      dispatch(TodayMovieChartAction.isLoading(updatedMovieList));
-    };
-
-    // 박스오피스 영화 데이터의 영화제목과 개봉일 정보를 인자로 받아와 포스터를 가져오는 함수
-    const getMovies = async (movie) => {
-      try {
-        const json = await axios({
-          method: "GET",
-          url: `https://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&detail=Y&title=${
-            movie.movieNm
-          }&releaseDts=${movie.openDt.replaceAll("-", "")}&ServiceKey=${process.env.REACT_APP_POSTERS_SECRETKEY}`,
-        });
-        const posterURL = json.data.Data[0].Result[0].posters.split("|")[0];
-        const title = json.data.Data[0].Result[0].title;
-        return posterURL;
-      } catch (error) {
-        console.error("Error fetching poster:", error);
-      }
-    };
-
-    getData();
-  }, [now]);
+  useBoxOffice(dispatch, isDaily);
 
   return (
     <_customSwiper
