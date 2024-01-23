@@ -9,6 +9,7 @@ import { koreaMovieListAction } from "../store/koreaMovie";
 import GlobalStyles from "../component/GlobalStyles";
 import styled, { ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme, NavbarDark, NavbarLight } from "../component/theme";
+import useBoxOffice from "../hooks/useBoxOffice";
 
 const _MainPage = styled.div`
   display: flex;
@@ -103,51 +104,10 @@ export default function KoreaMovie() {
   const { koreaMovieList } = useSelector((state) => state.koreaMovieList);
   const genreList = useSelector((state) => state.genreList);
   const isDarkMode = useSelector((state) => state.app.isDarkMode);
+  const url = `https://kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json?key=f5eef3421c602c6cb7ea224104795888&repNationCd=22041011&movieTypeCd=220101&openStartDt=2010&openEndDt=2022&itemPerPage=100`;
 
   const dispatch = useDispatch();
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const res = await axios({
-          method: "GET",
-          url: `https://kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json?key=f5eef3421c602c6cb7ea224104795888&repNationCd=22041011&movieTypeCd=220101&openStartDt=2010&openEndDt=2022&itemPerPage=100`,
-        });
-        console.log(res.data);
-        const movieList = res.data.movieListResult.movieList;
-
-        // 각 영화에 대한 포스터 호출
-        const moviePromises = movieList.map((movie) => getMovies(movie));
-        const moviesWithPosters = await Promise.all(moviePromises);
-
-        const updatedMovieList = movieList.map((movie, index) => ({
-          ...movie,
-          poster: moviesWithPosters[index],
-        }));
-        dispatch(koreaMovieListAction.isLoding(updatedMovieList));
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    // 박스오피스 영화 데이터의 영화제목과 개봉일 정보를 인자로 받아와 포스터를 가져오는 함수
-    const getMovies = async (movie) => {
-      try {
-        const json = await axios({
-          method: "GET",
-          url: `https://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&detail=Y&title=${
-            movie.movieNm
-          }&releaseDts=${movie.openDt.replaceAll("-", "")}&ServiceKey=EP520Y4JRPI6ZC781VKW`,
-        });
-        const posterURL = json.data.Data[0].Result[0].posters.split("|")[0];
-        const title = json.data.Data[0].Result[0].title;
-        return posterURL;
-      } catch (error) {
-        console.error("Error", error);
-      }
-    };
-    getData();
-  }, []);
-  // console.log(koreaMovieList);
-  console.log(genreList);
+  useBoxOffice(dispatch, url, "koreaMovieList");
   return (
     <>
       <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>

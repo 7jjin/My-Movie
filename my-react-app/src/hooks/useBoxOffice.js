@@ -2,66 +2,80 @@ import { useEffect } from "react";
 import axios from "axios";
 import { WeekendMovieChartAction } from "../store/weekendMovieChart";
 import { TodayMovieChartAction } from "../store/todayMovieChart";
-
-// 날짜를 YYYY/MM/DD형식으로 바꾸는 함수
-function getCurrentDate() {
-  var date = new Date();
-  var year = date.getFullYear().toString();
-  var month = date.getMonth() + 1;
-  month = month < 10 ? "0" + month.toString() : month.toString();
-  var day = date.getDate();
-  day = day < 10 ? "0" + day.toString() : day.toString();
-  return year + month + day - 7;
-}
-
-// 현재 날짜
-let now = getCurrentDate();
+import getCurrentDate from "../libs/date";
+import { BsReplyAll } from "react-icons/bs";
+import { koreaMovieListAction } from "../store/koreaMovie";
+import { japenMovieListAction } from "../store/japenMovie";
+import { etcMovieListAction } from "../store/etcMovie";
+import { usMovieListAction } from "../store/UsMovie";
 
 // 박스오피스 정보를 불러오는 Hook
-const useBoxOffice = (dispatch, isDaily) => {
-  let url;
-
-  // 일별/주간 박스오피스에 따른 다른 url 제공
-  if (isDaily) {
-    url = `https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=${process.env.REACT_APP_BOXOFFICE_SECRETKEY}&targetDt=${now}`;
-  } else {
-    url = `https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchWeeklyBoxOfficeList.json?key=${process.env.REACT_APP_BOXOFFICE_SECRETKEY}&targetDt=${now}&weekGb=0`;
-  }
-
+const useBoxOffice = (dispatch, url, sortedMovie) => {
   useEffect(() => {
-    const fetchData = async () => {
+    const getMovie = async () => {
       try {
         const res = await axios({
           method: "GET",
           url: url,
         });
 
-        // 일별/주간 박스오피스 리스트
-        const boxOfficeMovies = isDaily
-          ? res.data.boxOfficeResult.dailyBoxOfficeList
-          : res.data.boxOfficeResult.weeklyBoxOfficeList;
+        let movieList;
+        switch (sortedMovie) {
+          case "dailyBoxOffice":
+            movieList = res.data.boxOfficeResult.dailyBoxOfficeList;
+            break;
+          case "weeklyBoxOffice":
+            movieList = res.data.boxOfficeResult.weeklyBoxOfficeList;
+            break;
+          case "koreaMovieList":
+            movieList = res.data.movieListResult.movieList;
+            break;
+          case "japenMovieList":
+            movieList = res.data.movieListResult.movieList;
+            break;
+          case "usMovieList":
+            movieList = res.data.movieListResult.movieList;
+            break;
+          case "etcMovieList":
+            movieList = res.data.movieListResult.movieList;
+            break;
+        }
 
-        // 포스터 정보만 추출
-        const moviePromises = boxOfficeMovies.map((movie) => getMovies(movie));
-        const moviesWithPosters = await Promise.all(moviePromises);
+        // 포스터 정보를 추출하는 함수 실행
+        const moviesWithPosters = await Promise.all(movieList.map((movie) => getPoster(movie)));
 
         // 박스오피스 정보에 포스터 정보까지 합쳐서 저장
-        const updatedMovieList = boxOfficeMovies.map((movie, index) => ({
+        const updatedMovieList = movieList.map((movie, index) => ({
           ...movie,
           poster: moviesWithPosters[index],
         }));
-        dispatch(
-          isDaily
-            ? TodayMovieChartAction.isLoading(updatedMovieList)
-            : WeekendMovieChartAction.isLoading(updatedMovieList)
-        );
+        switch (sortedMovie) {
+          case "dailyBoxOffice":
+            dispatch(TodayMovieChartAction.isLoading(updatedMovieList));
+            break;
+          case "weeklyBoxOffice":
+            dispatch(WeekendMovieChartAction.isLoading(updatedMovieList));
+            break;
+          case "koreaMovieList":
+            dispatch(koreaMovieListAction.isLoading(updatedMovieList));
+            break;
+          case "japenMovieList":
+            dispatch(japenMovieListAction.isLoading(updatedMovieList));
+            break;
+          case "usMovieList":
+            dispatch(usMovieListAction.isLoading(updatedMovieList));
+            break;
+          case "etcMovieList":
+            dispatch(etcMovieListAction.isLoading(updatedMovieList));
+            break;
+        }
       } catch (error) {
         console.error("Error fetching box office data:", error);
       }
     };
 
     // 포스터 정보를 추출하는 함수
-    const getMovies = async (movie) => {
+    const getPoster = async (movie) => {
       try {
         const json = await axios({
           method: "GET",
@@ -75,8 +89,8 @@ const useBoxOffice = (dispatch, isDaily) => {
         console.error("Error fetching poster:", error);
       }
     };
-    fetchData();
-  }, [dispatchEvent, now]);
+    getMovie();
+  }, [getCurrentDate]);
 };
 
 export default useBoxOffice;

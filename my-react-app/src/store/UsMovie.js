@@ -10,7 +10,7 @@ const usMovieListSlice = createSlice({
   name: "usMovieList",
   initialState: initusMovieList,
   reducers: {
-    isLoding(state, action) {
+    isLoading(state, action) {
       state.usMovieList = action.payload;
     },
   },
