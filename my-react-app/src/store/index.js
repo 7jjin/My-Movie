@@ -9,6 +9,7 @@ import usMovieListSlice from "./UsMovie";
 import etcMovieListSlice from "./etcMovie";
 import genreListSlice from "./genreButton";
 import appSlice from "./darkMode";
+import apiLoadingSlice from "./apiLoading";
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
     etcMovieList: etcMovieListSlice,
     genreList: genreListSlice,
     app: appSlice,
+    apiLoading: apiLoadingSlice,
   },
 });
 

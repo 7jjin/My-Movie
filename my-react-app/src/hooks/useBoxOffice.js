@@ -7,14 +7,20 @@ import { koreaMovieListAction } from "../store/koreaMovie";
 import { japenMovieListAction } from "../store/japenMovie";
 import { etcMovieListAction } from "../store/etcMovie";
 import { usMovieListAction } from "../store/UsMovie";
+import { useSelector } from "react-redux";
+import { apiLoadingAction } from "../store/apiLoading";
 
 // 박스오피스 정보를 불러오는 Hook
 const useBoxOffice = (dispatch, url, sortedMovie) => {
   // 날짜 메모이제이션
   const currentDate = useMemo(() => getCurrentDate(), []);
 
+  // 로딩 상태
+  const { isLoading } = useSelector((state) => state.apiLoading);
+
   useEffect(() => {
     const getMovie = async () => {
+      dispatch(apiLoadingAction.isLoading(true));
       try {
         const res = await axios({
           method: "GET",
@@ -75,6 +81,7 @@ const useBoxOffice = (dispatch, url, sortedMovie) => {
           default:
             break;
         }
+        dispatch(apiLoadingAction.isLoading(false));
       } catch (error) {
         console.error("Error fetching box office data:", error);
       }

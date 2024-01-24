@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, A11y } from "swiper/modules";
 // Import Swiper styles
@@ -9,83 +10,87 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import useBoxOffice from "../hooks/useBoxOffice";
 import getCurrentDate from "../libs/date";
+import Carousel from "./skeleton/Carousel.js";
 
 export default function MainSlide() {
-  const { todayMovieList } = useSelector((state) => state.todayMovieChart);
-  const date = getCurrentDate();
-  const imageUrls = todayMovieList.map((movie) => movie.poster);
-
   const dispatch = useDispatch();
+
+  // 일별 박스오피스 리스트
+  const { todayMovieList } = useSelector((state) => state.todayMovieChart);
+  // api호출을 위한 오늘날짜
+  const date = getCurrentDate();
+  // 로딩 중일 때 스켈레톤 UI를 보여주기 위한 상태
+  const { isLoading } = useSelector((state) => state.apiLoading);
 
   const url = `https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=${process.env.REACT_APP_BOXOFFICE_SECRETKEY}&targetDt=${date}`;
 
+  // 상황에 맞는 영화 리스트 출력하는 훅
   useBoxOffice(dispatch, url, "dailyBoxOffice");
 
   return (
     <>
-      {imageUrls.map((imageUrl, index) => (
-        <link key={index} rel="preload" href={imageUrl} as="image" />
-      ))}
+      {isLoading && <Carousel />}
+      {!isLoading && (
+        <_customSwiper
+          modules={[Navigation, A11y]}
+          spaceBetween={10}
+          slidesPerView={5}
+          navigation
+          slidesPerGroup={5} // 그룹 당 슬라이드 수 설정
+          //   onSwiper={(swiper) => console.log(swiper)}
+          onSlideChange={() => console.log("slide change")}
+          breakpoints={{
+            // 1300px 이상일 때
+            1300: {
+              slidesPerView: 5,
+              spaceBetween: 30,
+            },
+            // 1024px 이상일 때
+            1024: {
+              slidesPerView: 4,
+              spaceBetween: 10,
+              slidesPerGroup: 4, // 그룹 당 슬라이드 수 설정
+            },
+            // 768px 이상일 때
+            750: {
+              slidesPerView: 3,
+              slidesPerGroup: 3, // 그룹 당 슬라이드 수 설정
+            },
+            375: {
+              slidesPerView: 2,
+              slidesPerGroup: 2, // 그룹 당 슬라이드 수 설정
+            },
+          }}
+        >
+          {todayMovieList.map((movie) => {
+            return (
+              <>
+                <SwiperSlide key={movie.rnum}>
+                  <div>
+                    <_imgWrapper>
+                      <Link to={`/movie/${movie.movieNm}/${movie.openDt.replaceAll("-", "")}`}>
+                        <_movieImg src={movie.poster} alt={movie.poster} fetchpriority="high" />
+                        <_movieRank>{movie.rnum}</_movieRank>
+                      </Link>
+                    </_imgWrapper>
 
-      <_customSwiper
-        modules={[Navigation, A11y]}
-        spaceBetween={10}
-        slidesPerView={5}
-        navigation
-        slidesPerGroup={5} // 그룹 당 슬라이드 수 설정
-        //   onSwiper={(swiper) => console.log(swiper)}
-        onSlideChange={() => console.log("slide change")}
-        breakpoints={{
-          // 1300px 이상일 때
-          1300: {
-            slidesPerView: 5,
-            spaceBetween: 30,
-          },
-          // 1024px 이상일 때
-          1024: {
-            slidesPerView: 4,
-            spaceBetween: 10,
-            slidesPerGroup: 4, // 그룹 당 슬라이드 수 설정
-          },
-          // 768px 이상일 때
-          750: {
-            slidesPerView: 3,
-            slidesPerGroup: 3, // 그룹 당 슬라이드 수 설정
-          },
-          375: {
-            slidesPerView: 2,
-            slidesPerGroup: 2, // 그룹 당 슬라이드 수 설정
-          },
-        }}
-      >
-        {todayMovieList.map((movie) => {
-          return (
-            <>
-              <SwiperSlide key={movie.rnum}>
-                <div>
-                  <_imgWrapper>
-                    <Link to={`/movie/${movie.movieNm}/${movie.openDt.replaceAll("-", "")}`}>
-                      <_movieImg src={movie.poster} alt={movie.poster} fetchpriority="high" />
-                      <_movieRank>{movie.rnum}</_movieRank>
-                    </Link>
-                  </_imgWrapper>
-
-                  <_movieBox>
-                    <_movieName>{movie.movieNm}</_movieName>
-                    <div>
-                      {movie.audiChange > 0 ? (
-                        <span>어제보다 {movie.audiChange}% 🔥 </span>
-                      ) : (
-                        <span>어제보다 {movie.audiChange}% 👎</span>
-                      )}
-                    </div>
-                  </_movieBox>
-                </div>
-              </SwiperSlide>
-            </>
-          );
-        })}
-      </_customSwiper>
+                    <_movieBox>
+                      <_movieName>{movie.movieNm}</_movieName>
+                      <div>
+                        {movie.audiChange > 0 ? (
+                          <span>어제보다 {movie.audiChange}% 🔥 </span>
+                        ) : (
+                          <span>어제보다 {movie.audiChange}% 👎</span>
+                        )}
+                      </div>
+                    </_movieBox>
+                  </div>
+                </SwiperSlide>
+              </>
+            );
+          })}
+        </_customSwiper>
+      )}
     </>
   );
 }
