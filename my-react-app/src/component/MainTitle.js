@@ -1,6 +1,18 @@
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
+export default function MainTitle() {
+  // console.log(title);
+  return (
+    <>
+      <_h1Wrapper>
+        <_h1>홈</_h1>
+        <_hr />
+      </_h1Wrapper>
+    </>
+  );
+}
+
 const _h1Wrapper = styled.div`
   margin: 54px 0 0;
   padding-right: 40px;
@@ -31,15 +43,3 @@ const _hr = styled.hr`
   margin: 0;
   margin: 0 0 18px;
 `;
-
-export default function MainTitle() {
-  // console.log(title);
-  return (
-    <>
-      <_h1Wrapper>
-        <_h1>홈</_h1>
-        <_hr />
-      </_h1Wrapper>
-    </>
-  );
-}

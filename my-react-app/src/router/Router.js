@@ -1,13 +1,5 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import MovieDetail from "../pages/MovieDetail";
-// import MainPage from "../pages/MainPage";
-// import KoreaMovie from "../pages/KoreaMovie";
-// import JapenMovie from "../pages/JapenMovie";
-// import UsMovie from "../pages/UsMovie";
-// import EtcMovie from "../pages/EtcMovie";
-// import LoginPage from "../pages/LoginPage";
-// import SignupPage from "../pages/SignupPage";
 
 // React.lazy 적용
 const MainPage = lazy(() => import("../pages/MainPage"));

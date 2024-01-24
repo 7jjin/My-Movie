@@ -2,6 +2,22 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { contentAction } from "../store/content";
 
+export default function ContentSelectBar() {
+  const dispatch = useDispatch();
+  return (
+    <>
+      <_section>
+        <div>
+          <_button onClick={() => dispatch(contentAction.StillCut())}>콘텐츠 정보</_button>
+        </div>
+        <div>
+          <_button onClick={() => dispatch(contentAction.RelativeMovie())}>관련 콘텐츠</_button>
+        </div>
+      </_section>
+    </>
+  );
+}
+
 const _section = styled.section`
   display: flex;
   -webkit-box-pack: center;
@@ -37,19 +53,3 @@ const _button = styled.button`
     height: 2px;
   }
 `;
-
-export default function ContentSelectBar() {
-  const dispatch = useDispatch();
-  return (
-    <>
-      <_section>
-        <div>
-          <_button onClick={() => dispatch(contentAction.StillCut())}>콘텐츠 정보</_button>
-        </div>
-        <div>
-          <_button onClick={() => dispatch(contentAction.RelativeMovie())}>관련 콘텐츠</_button>
-        </div>
-      </_section>
-    </>
-  );
-}

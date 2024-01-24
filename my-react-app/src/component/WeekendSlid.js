@@ -59,7 +59,7 @@ export default function WeekendSlid() {
               <div>
                 <_imgWrapper>
                   <Link to={`/movie/${movie.movieNm}/${movie.openDt.replaceAll("-", "")}`}>
-                    <_movieImg src={movie.poster} />
+                    <_movieImg src={movie.poster} alt={movie.poster} loading="lazy" decoding="async" />
                     <_movieRank>{movie.rnum}</_movieRank>
                   </Link>
                 </_imgWrapper>
