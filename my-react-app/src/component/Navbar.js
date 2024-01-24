@@ -1,4 +1,3 @@
-import ReactDOM from "react-dom";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
@@ -10,6 +9,77 @@ import { Link } from "react-router-dom";
 import { BsFillSunFill, BsFillMoonFill } from "react-icons/bs";
 import { toggleDarkModeAction } from "../store/darkMode";
 import JINCHA_LOGO from "../img/JINCHA_LOGO.png";
+
+export default function Navbar() {
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 500);
+
+  // 화면 크기가 변경될 때 이벤트 핸들러를 등록합니다.
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth <= 500);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // 컴포넌트 언마운트 시 이벤트 핸들러를 제거합니다.
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  //dispatch로 함수 실행
+  const dispatch = useDispatch();
+  const isDarkMode = useSelector((state) => state.app.isDarkMode);
+  return (
+    <>
+      <NavbarDiv>
+        <Link to={"/"}>
+          <Navbar_a>
+            <Navbar_img src={JINCHA_LOGO} alt="LOGO"></Navbar_img>
+          </Navbar_a>
+        </Link>
+
+        <Section>
+          <ul>
+            <_li>
+              <Link to={"/"} style={{ textDecoration: "none", width: "100%" }}>
+                <Nav_a>
+                  <FontAwesomeIcon icon={faHouse} />
+                  <Nav_span>홈</Nav_span>
+                </Nav_a>
+              </Link>
+            </_li>
+            <_li isSmallScreen={isSmallScreen}>
+              <Nav_a onClick={() => dispatch(titleAction.TodayBoxOffice())}>
+                <FontAwesomeIcon icon={faHouse} />
+                <Nav_span className="full-text">일별 박스오피스</Nav_span>
+                <Nav_span className="short-text">일별</Nav_span>
+              </Nav_a>
+            </_li>
+            <_li isSmallScreen={isSmallScreen}>
+              <Nav_a onClick={() => dispatch(titleAction.WeekendBoxOffice())}>
+                <FontAwesomeIcon icon={faHouse} />
+                <Nav_span className="full-text">주간 박스오피스</Nav_span>
+                <Nav_span className="short-text">주간</Nav_span>
+              </Nav_a>
+            </_li>
+          </ul>
+          <_lightmodeli isSmallScreen={isSmallScreen} onClick={() => dispatch(toggleDarkModeAction.toggleDarkMode())}>
+            <_lightModeBtn className="full-text">
+              {isDarkMode ? <BsFillSunFill /> : <BsFillMoonFill />}
+              <_lightModeSpan>{isDarkMode ? "라이트모드" : "다크모드"}</_lightModeSpan>
+            </_lightModeBtn>
+            {isSmallScreen && (
+              <_lightModeBtn className="short-text">
+                {isDarkMode ? <BsFillSunFill /> : <BsFillMoonFill />}
+              </_lightModeBtn>
+            )}
+          </_lightmodeli>
+        </Section>
+      </NavbarDiv>
+    </>
+  );
+}
 const NavbarDiv = styled.nav`
   position: fixed;
   top: 0;
@@ -182,71 +252,3 @@ const _li = styled.li`
     }
   }
 `;
-
-export default function Navbar() {
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 500);
-
-  // 화면 크기가 변경될 때 이벤트 핸들러를 등록합니다.
-  useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth <= 500);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    // 컴포넌트 언마운트 시 이벤트 핸들러를 제거합니다.
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  //dispatch로 함수 실행
-  const dispatch = useDispatch();
-  const isDarkMode = useSelector((state) => state.app.isDarkMode);
-  return (
-    <>
-      <NavbarDiv>
-        <Navbar_a>
-          <Navbar_img src={JINCHA_LOGO}></Navbar_img>
-        </Navbar_a>
-        <Section>
-          <ul>
-            <_li>
-              <Link to={"/"} style={{ textDecoration: "none", width: "100%" }}>
-                <Nav_a>
-                  <FontAwesomeIcon icon={faHouse} />
-                  <Nav_span>홈</Nav_span>
-                </Nav_a>
-              </Link>
-            </_li>
-            <_li isSmallScreen={isSmallScreen}>
-              <Nav_a onClick={() => dispatch(titleAction.TodayBoxOffice())}>
-                <FontAwesomeIcon icon={faHouse} />
-                <Nav_span className="full-text">일별 박스오피스</Nav_span>
-                <Nav_span className="short-text">일별</Nav_span>
-              </Nav_a>
-            </_li>
-            <_li isSmallScreen={isSmallScreen}>
-              <Nav_a onClick={() => dispatch(titleAction.WeekendBoxOffice())}>
-                <FontAwesomeIcon icon={faHouse} />
-                <Nav_span className="full-text">주간 박스오피스</Nav_span>
-                <Nav_span className="short-text">주간</Nav_span>
-              </Nav_a>
-            </_li>
-          </ul>
-          <_lightmodeli isSmallScreen={isSmallScreen} onClick={() => dispatch(toggleDarkModeAction.toggleDarkMode())}>
-            <_lightModeBtn className="full-text">
-              {isDarkMode ? <BsFillSunFill /> : <BsFillMoonFill />}
-              <_lightModeSpan>{isDarkMode ? "라이트모드" : "다크모드"}</_lightModeSpan>
-            </_lightModeBtn>
-            {isSmallScreen && (
-              <_lightModeBtn className="short-text">
-                {isDarkMode ? <BsFillSunFill /> : <BsFillMoonFill />}
-              </_lightModeBtn>
-            )}
-          </_lightmodeli>
-        </Section>
-      </NavbarDiv>
-    </>
-  );
-}

@@ -2,6 +2,129 @@ import styled from "styled-components";
 import JINCHA_LOGO from "../img/JINCHA_LOGO.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+
+export default function SignupPage() {
+  // react-hook-form
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    watch,
+  } = useForm({ mode: "onChange" });
+
+  const navigate = useNavigate();
+
+  const [nameWatch, emailWatch, passWatch] = watch(["name", "email", "password"]);
+
+  const ValidMessage = () => {
+    alert("회원가입이 성공하셨습니다.");
+  };
+
+  const onSubmit = (data) => {
+    localStorage.setItem("name", data.name);
+    localStorage.setItem("email", data.email);
+    localStorage.setItem("password", data.password);
+    ValidMessage();
+    navigate("/login");
+  };
+
+  return (
+    <>
+      <section className="login">
+        <_nav>
+          <Navbar_a>
+            <Link to={"/"}>
+              <Navbar_img src={JINCHA_LOGO}></Navbar_img>
+            </Link>
+          </Navbar_a>
+          <_loginDiv>
+            <Link to={"/login"}>
+              <_loginBtn>로그인</_loginBtn>
+            </Link>
+          </_loginDiv>
+        </_nav>
+        <_main>
+          <_imgWrapper src="ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1KbklsMHNJbkFpT2lJdmRqSXZjM1J2Y21VdmFXMWhaMlV2TVRZNE5Ea3hOVGN4T1RJM05UQTVOVGs0TXlKOS5mRjlhcmYwZWNJd2cyNUl4YnBfZkZyV0E5UmpkMnhLdmVEUnhUUU1jUXN3">
+            <_singupWrapper className="signupWrapper">
+              <_signContent className="signupContent">
+                <_signupTitle>회원가입</_signupTitle>
+                <_form onSubmit={handleSubmit(onSubmit)}>
+                  <_inputBox className="name">
+                    <_inputName
+                      type="text"
+                      placeholder="이름 (2글자 이상)"
+                      {...register("name", {
+                        required: true,
+                        minLength: { message: "최소 2글자 이상 작성해주세요", value: 2 },
+                      })}
+                    ></_inputName>
+                    {nameWatch === undefined || nameWatch === "" ? (
+                      ""
+                    ) : errors.name ? (
+                      <_inValidIcon></_inValidIcon>
+                    ) : (
+                      <_VliadIcon></_VliadIcon>
+                    )}
+                  </_inputBox>
+                  <_inputBox className="email">
+                    <_inputEmail
+                      type="text"
+                      placeholder="이메일 (example@gamil.com)"
+                      {...register("email", {
+                        required: true,
+                        pattern: {
+                          value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i,
+                          message: "이메일 형식에 맞지 않습니다.",
+                        },
+                      })}
+                    ></_inputEmail>
+                    {emailWatch === undefined || emailWatch === "" ? (
+                      ""
+                    ) : errors.email ? (
+                      <_inValidIcon></_inValidIcon>
+                    ) : (
+                      <_VliadIcon></_VliadIcon>
+                    )}
+                  </_inputBox>
+                  <_inputBox className="pw">
+                    <_inputPw
+                      type="password"
+                      placeholder="영문,숫자 조합 8자 이상"
+                      {...register("password", {
+                        required: true,
+                        pattern: {
+                          value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/i,
+                          message: "비밀번호 형식에 맞지 않습니다.",
+                        },
+                      })}
+                    ></_inputPw>
+                    {passWatch === undefined || passWatch === "" ? (
+                      ""
+                    ) : errors.password ? (
+                      <_inValidIcon></_inValidIcon>
+                    ) : (
+                      <_VliadIcon></_VliadIcon>
+                    )}
+                  </_inputBox>
+                  <_btnDiv>
+                    {isValid ? (
+                      <_btnOn type="submit">계정 생성하기</_btnOn>
+                    ) : (
+                      <_btnOff type="submit" disabled>
+                        계정 생성하기
+                      </_btnOff>
+                    )}
+                  </_btnDiv>
+                </_form>
+              </_signContent>
+            </_singupWrapper>
+          </_imgWrapper>
+        </_main>
+      </section>
+    </>
+  );
+}
+
 const _main = styled.main`
   background: #000;
 `;
@@ -192,125 +315,3 @@ const _VliadIcon = styled.div`
   height: 20px;
   margin-top: -10px;
 `;
-export default function SignupPage() {
-  // react-hook-form
-  const {
-    register,
-    handleSubmit,
-    trigger,
-    formState: { errors, isDirty, isValid },
-    watch,
-  } = useForm({ mode: "onChange" });
-
-  const navigate = useNavigate();
-
-  const [nameWatch, emailWatch, passWatch] = watch(["name", "email", "password"]);
-
-  const ValidMessage = () => {
-    alert("회원가입이 성공하셨습니다.");
-  };
-
-  const onSubmit = (data) => {
-    localStorage.setItem("name", data.name);
-    localStorage.setItem("email", data.email);
-    localStorage.setItem("password", data.password);
-    ValidMessage();
-    navigate("/login");
-  };
-
-  return (
-    <>
-      <section className="login">
-        <_nav>
-          <Navbar_a>
-            <Link to={"/"}>
-              <Navbar_img src={JINCHA_LOGO}></Navbar_img>
-            </Link>
-          </Navbar_a>
-          <_loginDiv>
-            <Link to={"/login"}>
-              <_loginBtn>로그인</_loginBtn>
-            </Link>
-          </_loginDiv>
-        </_nav>
-        <_main>
-          <_imgWrapper src="ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1KbklsMHNJbkFpT2lJdmRqSXZjM1J2Y21VdmFXMWhaMlV2TVRZNE5Ea3hOVGN4T1RJM05UQTVOVGs0TXlKOS5mRjlhcmYwZWNJd2cyNUl4YnBfZkZyV0E5UmpkMnhLdmVEUnhUUU1jUXN3">
-            <_singupWrapper className="signupWrapper">
-              <_signContent className="signupContent">
-                <_signupTitle>회원가입</_signupTitle>
-                <_form onSubmit={handleSubmit(onSubmit)}>
-                  <_inputBox className="name">
-                    <_inputName
-                      type="text"
-                      placeholder="이름 (2글자 이상)"
-                      {...register("name", {
-                        required: true,
-                        minLength: { message: "최소 2글자 이상 작성해주세요", value: 2 },
-                      })}
-                    ></_inputName>
-                    {nameWatch === undefined || nameWatch === "" ? (
-                      ""
-                    ) : errors.name ? (
-                      <_inValidIcon></_inValidIcon>
-                    ) : (
-                      <_VliadIcon></_VliadIcon>
-                    )}
-                  </_inputBox>
-                  <_inputBox className="email">
-                    <_inputEmail
-                      type="text"
-                      placeholder="이메일 (example@gamil.com)"
-                      {...register("email", {
-                        required: true,
-                        pattern: {
-                          value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i,
-                          message: "이메일 형식에 맞지 않습니다.",
-                        },
-                      })}
-                    ></_inputEmail>
-                    {emailWatch === undefined || emailWatch === "" ? (
-                      ""
-                    ) : errors.email ? (
-                      <_inValidIcon></_inValidIcon>
-                    ) : (
-                      <_VliadIcon></_VliadIcon>
-                    )}
-                  </_inputBox>
-                  <_inputBox className="pw">
-                    <_inputPw
-                      type="password"
-                      placeholder="영문,숫자 조합 8자 이상"
-                      {...register("password", {
-                        required: true,
-                        pattern: {
-                          value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/i,
-                          message: "비밀번호 형식에 맞지 않습니다.",
-                        },
-                      })}
-                    ></_inputPw>
-                    {passWatch === undefined || passWatch === "" ? (
-                      ""
-                    ) : errors.password ? (
-                      <_inValidIcon></_inValidIcon>
-                    ) : (
-                      <_VliadIcon></_VliadIcon>
-                    )}
-                  </_inputBox>
-                  <_btnDiv>
-                    {isValid ? (
-                      <_btnOn type="submit">계정 생성하기</_btnOn>
-                    ) : (
-                      <_btnOff type="submit" disabled>
-                        계정 생성하기
-                      </_btnOff>
-                    )}
-                  </_btnDiv>
-                </_form>
-              </_signContent>
-            </_singupWrapper>
-          </_imgWrapper>
-        </_main>
-      </section>
-    </>
-  );
-}

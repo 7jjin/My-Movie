@@ -1,5 +1,56 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import koreaMovieImg from "../img/jinCha_korea.webp";
+import japenMovieImg from "../img/jinCha_japen.webp";
+import usMovieImg from "../img/jinCha_us.webp";
+import etcMovieImg from "../img/jinCha_etc.webp";
+
+export default function Country() {
+  return (
+    <>
+      <_CountryWrapper className="CountryWrapper">
+        <_title className="title">나라별 추천 영화</_title>
+        <_countryBox className="countryBox">
+          <Link to={"/KoreaMovie"}>
+            <_countryKorea>
+              <div className="Korea">
+                <span>한국</span>
+                <_img src={koreaMovieImg} rel="preload" loading="lazy" alt="koreaMovie"></_img>
+              </div>
+            </_countryKorea>
+          </Link>
+
+          <Link to={"/JapenMovie"}>
+            <_countryJapen>
+              <div className="Korea">
+                <span>일본</span>
+                <_img src={japenMovieImg} rel="preload" loading="lazy" alt="japenMovie"></_img>
+              </div>
+            </_countryJapen>
+          </Link>
+
+          <Link to={"/UsMovie"}>
+            <_countryUS>
+              <div className="Korea">
+                <span>미국</span>
+                <_img src={usMovieImg} rel="preload" loading="lazy" alt="usMovie"></_img>
+              </div>
+            </_countryUS>
+          </Link>
+
+          <Link to={"/EtcMovie"}>
+            <_countryEtc>
+              <div className="Korea">
+                <span>기타</span>
+                <_img src={etcMovieImg} rel="preload" loading="lazy" alt="etcMovie"></_img>
+              </div>
+            </_countryEtc>
+          </Link>
+        </_countryBox>
+      </_CountryWrapper>
+    </>
+  );
+}
 const _CountryWrapper = styled.div`
   padding-right: 40px;
   padding-left: 40px;
@@ -105,50 +156,3 @@ const _img = styled.img`
   width: 100%;
   height: 100%;
 `;
-
-export default function Country() {
-  return (
-    <>
-      <_CountryWrapper className="CountryWrapper">
-        <_title className="title">나라별 추천 영화</_title>
-        <_countryBox className="countryBox">
-          <Link to={"/KoreaMovie"}>
-            <_countryKorea>
-              <div className="Korea">
-                <span>한국</span>
-                <_img src="https://an2-img.amz.wtchn.net/image/v2/h9H3n1xkSHJsHSoxgr0gVw.png?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKaVlXTnJaM0p2ZFc1a0lqcDdJbklpT2pJMU5Td2laeUk2TWpVMUxDSmlJam95TlRWOUxDSm9Jam95TnpBc0luQWlPaUl2ZGpJdmMzUnZjbVV2YzNablgzUmxiWEJzWVhSbEx6RTJOVFUwTXpFd09EazBPREV3TXpNMk16TWlMQ0p6ZG1kZmNHRnlZVzBpT25zaVkyOXNiM0l4SWpvaUl6VTNNREV4UWlKOUxDSjNJam8zTWpCOS5WUUUySnBydHQzdjNWTmR3b1lPS1VKZUNHSFB0OHlNX2ZzYVBFNEU5Rll3"></_img>
-              </div>
-            </_countryKorea>
-          </Link>
-
-          <Link to={"/JapenMovie"}>
-            <_countryJapen>
-              <div className="Korea">
-                <span>일본</span>
-                <_img src="https://an2-img.amz.wtchn.net/image/v2/uT7KUYcoHGulWNYly2EyBQ.png?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKaVlXTnJaM0p2ZFc1a0lqcDdJbklpT2pJMU5Td2laeUk2TWpVMUxDSmlJam95TlRWOUxDSm9Jam95TnpBc0luQWlPaUl2ZGpJdmMzUnZjbVV2YzNablgzUmxiWEJzWVhSbEx6RTJORFl5T0RjNU5qUTNPVEkzTWprd01ERWlMQ0p6ZG1kZmNHRnlZVzBpT25zaVkyOXNiM0l4SWpvaUl6VkVORFpDUVNKOUxDSjNJam8zTWpCOS5IY2VFNzRYRTdUaGdOc3FDdE9pZEZKRmZUMnl0TV9ZcWxHaXdKQ3pDUzVZ"></_img>
-              </div>
-            </_countryJapen>
-          </Link>
-
-          <Link to={"/UsMovie"}>
-            <_countryUS>
-              <div className="Korea">
-                <span>미국</span>
-                <_img src="https://an2-img.amz.wtchn.net/image/v2/qPiND_BzhBkRJBHI8JmpLA.png?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKaVlXTnJaM0p2ZFc1a0lqcDdJbklpT2pJMU5Td2laeUk2TWpVMUxDSmlJam95TlRWOUxDSm9Jam95TnpBc0luQWlPaUl2ZGpJdmMzUnZjbVV2YzNablgzUmxiWEJzWVhSbEx6RTJORFl5T0RjM01qWTBNVEkzT0RVeU16SWlMQ0p6ZG1kZmNHRnlZVzBpT25zaVkyOXNiM0l4SWpvaUl6QkVNemMxUmlKOUxDSjNJam8zTWpCOS5KX3pnX1BEMHFPaFRLY3pHdVJWdy1mMS1ZLUNFaExrRlRoOWpCN3lvdW1Z"></_img>
-              </div>
-            </_countryUS>
-          </Link>
-
-          <Link to={"/EtcMovie"}>
-            <_countryEtc>
-              <div className="Korea">
-                <span>기타</span>
-                <_img src="https://an2-img.amz.wtchn.net/image/v2/UMW6qIdqK62nuAS7atZT4w.png?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKaVlXTnJaM0p2ZFc1a0lqcDdJbklpT2pJMU5Td2laeUk2TWpVMUxDSmlJam95TlRWOUxDSm9Jam95TnpBc0luQWlPaUl2ZGpJdmMzUnZjbVV2YzNablgzUmxiWEJzWVhSbEx6RTJORFk0TnpjeU9EQTJOemMzT1RZd056WWlMQ0p6ZG1kZmNHRnlZVzBpT25zaVkyOXNiM0l4SWpvaUl6UTVNVVJET0NKOUxDSjNJam8zTWpCOS5yUnQzUXFIcjJmdFV2UjVBWGtJUXFPZWEwOUY3VmxJbkg3MkxyVVMyVm8w"></_img>
-              </div>
-            </_countryEtc>
-          </Link>
-        </_countryBox>
-      </_CountryWrapper>
-    </>
-  );
-}

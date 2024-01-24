@@ -6,41 +6,6 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { genreListAction } from "../store/genreButton";
 
-const _ul = styled.ul`
-  background: ${(props) => props.theme.originBlack};
-  padding: 16px 0px 8px;
-  margin-bottom: 0px;
-  list-style: none;
-`;
-
-const _li = styled.li`
-  display: inline-block;
-  vertical-align: top;
-  margin: 0px 8px 0px 0px;
-  margin-bottom: 8px;
-`;
-
-const _button = styled.button`
-  background: ${(props) => (props.active ? "white" : "rgb(34, 35, 38)")};
-  color: ${(props) => (props.active ? "black" : "rgb(132, 134, 141)")};
-  font-size: 15px;
-  font-weight: 500;
-  letter-spacing: 0px;
-  line-height: 20px;
-  vertical-align: top;
-  padding: 8px 16px;
-  border-radius: 24px;
-  cursor: pointer;
-  border: 0 none transparent;
-  outline: none 0;
-  @media (max-width: 700px) {
-    font-size: 11px;
-  }
-  @media (max-width: 500px) {
-    padding: 4px 8px;
-  }
-`;
-
 export default function GenreList() {
   const genreList = useSelector((state) => state.genreList);
   const dispatch = useDispatch();
@@ -173,3 +138,37 @@ export default function GenreList() {
     </>
   );
 }
+const _ul = styled.ul`
+  background: ${(props) => props.theme.originBlack};
+  padding: 16px 0px 8px;
+  margin-bottom: 0px;
+  list-style: none;
+`;
+
+const _li = styled.li`
+  display: inline-block;
+  vertical-align: top;
+  margin: 0px 8px 0px 0px;
+  margin-bottom: 8px;
+`;
+
+const _button = styled.button`
+  background: ${(props) => (props.active ? "white" : "rgb(34, 35, 38)")};
+  color: ${(props) => (props.active ? "black" : "rgb(132, 134, 141)")};
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0px;
+  line-height: 20px;
+  vertical-align: top;
+  padding: 8px 16px;
+  border-radius: 24px;
+  cursor: pointer;
+  border: 0 none transparent;
+  outline: none 0;
+  @media (max-width: 700px) {
+    font-size: 11px;
+  }
+  @media (max-width: 500px) {
+    padding: 4px 8px;
+  }
+`;

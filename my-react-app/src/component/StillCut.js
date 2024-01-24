@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from "swiper/modules";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import axios from "axios";
 
 import styled from "styled-components";
@@ -10,62 +10,6 @@ import "swiper/css/pagination";
 
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
-const _h1 = styled.h1`
-  padding: 0px 40px;
-  font-size: 20px;
-  margin-bottom: 25px;
-`;
-
-const _customSwiper = styled(Swiper)`
-  position: initial;
-  background-color: ${(props) => props.theme.swiperColor};
-  .swiper-button-prev,
-  .swiper-button-next {
-    top: 93px;
-    color: ${(props) => props.theme.color};
-    @media (max-width: 900px) {
-      top: 60px !important;
-    }
-  }
-  .swiper-button-next {
-    right: 46px;
-  }
-  .swiper-button-prev {
-    left: 20px;
-  }
-  .swiper-button-next:after,
-  .swiper-button-prev:after {
-    @media (max-width: 500px) {
-      font-size: 24px;
-    }
-  }
-`;
-
-const _swiperWrapper = styled.div`
-  padding: 10px 80px 32px;
-  position: relative;
-  .swiper-wrapper {
-    transition-timing-function: linear !important;
-    transition-duration: 500ms !important;
-  }
-  @media (max-width: 900px) {
-    margin-bottom: 50px;
-  }
-  @media (max-width: 500px) {
-    margin-bottom: 70px;
-  }
-`;
-
-const _stillImg = styled.img`
-  height: 160px;
-  border-radius: 15px;
-  width: 80%;
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.09) 35%, rgba(0, 0, 0, 0.85));
-  @media (max-width: 900px) {
-    height: 100px;
-  }
-`;
 
 export default function StillCut() {
   const [movieData, setMovieData] = useState([]);
@@ -139,3 +83,58 @@ export default function StillCut() {
     </>
   );
 }
+const _h1 = styled.h1`
+  padding: 0px 40px;
+  font-size: 20px;
+  margin-bottom: 25px;
+`;
+
+const _customSwiper = styled(Swiper)`
+  position: initial;
+  background-color: ${(props) => props.theme.swiperColor};
+  .swiper-button-prev,
+  .swiper-button-next {
+    top: 93px;
+    color: ${(props) => props.theme.color};
+    @media (max-width: 900px) {
+      top: 60px !important;
+    }
+  }
+  .swiper-button-next {
+    right: 46px;
+  }
+  .swiper-button-prev {
+    left: 20px;
+  }
+  .swiper-button-next:after,
+  .swiper-button-prev:after {
+    @media (max-width: 500px) {
+      font-size: 24px;
+    }
+  }
+`;
+
+const _swiperWrapper = styled.div`
+  padding: 10px 80px 32px;
+  position: relative;
+  .swiper-wrapper {
+    transition-timing-function: linear !important;
+    transition-duration: 500ms !important;
+  }
+  @media (max-width: 900px) {
+    margin-bottom: 50px;
+  }
+  @media (max-width: 500px) {
+    margin-bottom: 70px;
+  }
+`;
+
+const _stillImg = styled.img`
+  height: 160px;
+  border-radius: 15px;
+  width: 80%;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.09) 35%, rgba(0, 0, 0, 0.85));
+  @media (max-width: 900px) {
+    height: 100px;
+  }
+`;

@@ -13,6 +13,7 @@ import getCurrentDate from "../libs/date";
 export default function MainSlide() {
   const { todayMovieList } = useSelector((state) => state.todayMovieChart);
   const date = getCurrentDate();
+  const imageUrls = todayMovieList.map((movie) => movie.poster);
 
   const dispatch = useDispatch();
 
@@ -21,65 +22,71 @@ export default function MainSlide() {
   useBoxOffice(dispatch, url, "dailyBoxOffice");
 
   return (
-    <_customSwiper
-      modules={[Navigation, A11y]}
-      spaceBetween={10}
-      slidesPerView={5}
-      navigation
-      slidesPerGroup={5} // 그룹 당 슬라이드 수 설정
-      //   onSwiper={(swiper) => console.log(swiper)}
-      onSlideChange={() => console.log("slide change")}
-      breakpoints={{
-        // 1300px 이상일 때
-        1300: {
-          slidesPerView: 5,
-          spaceBetween: 30,
-        },
-        // 1024px 이상일 때
-        1024: {
-          slidesPerView: 4,
-          spaceBetween: 10,
-          slidesPerGroup: 4, // 그룹 당 슬라이드 수 설정
-        },
-        // 768px 이상일 때
-        750: {
-          slidesPerView: 3,
-          slidesPerGroup: 3, // 그룹 당 슬라이드 수 설정
-        },
-        375: {
-          slidesPerView: 2,
-          slidesPerGroup: 2, // 그룹 당 슬라이드 수 설정
-        },
-      }}
-    >
-      {todayMovieList.map((movie) => {
-        return (
-          <>
-            <SwiperSlide key={movie.rnum}>
-              <div>
-                <_imgWrapper>
-                  <Link to={`/movie/${movie.movieNm}/${movie.openDt.replaceAll("-", "")}`}>
-                    <_movieImg src={movie.poster} />
-                    <_movieRank>{movie.rnum}</_movieRank>
-                  </Link>
-                </_imgWrapper>
+    <>
+      {imageUrls.map((imageUrl, index) => (
+        <link key={index} rel="preload" href={imageUrl} as="image" />
+      ))}
 
-                <_movieBox>
-                  <_movieName>{movie.movieNm}</_movieName>
-                  <div>
-                    {movie.audiChange > 0 ? (
-                      <span>어제보다 {movie.audiChange}% 🔥 </span>
-                    ) : (
-                      <span>어제보다 {movie.audiChange}% 👎</span>
-                    )}
-                  </div>
-                </_movieBox>
-              </div>
-            </SwiperSlide>
-          </>
-        );
-      })}
-    </_customSwiper>
+      <_customSwiper
+        modules={[Navigation, A11y]}
+        spaceBetween={10}
+        slidesPerView={5}
+        navigation
+        slidesPerGroup={5} // 그룹 당 슬라이드 수 설정
+        //   onSwiper={(swiper) => console.log(swiper)}
+        onSlideChange={() => console.log("slide change")}
+        breakpoints={{
+          // 1300px 이상일 때
+          1300: {
+            slidesPerView: 5,
+            spaceBetween: 30,
+          },
+          // 1024px 이상일 때
+          1024: {
+            slidesPerView: 4,
+            spaceBetween: 10,
+            slidesPerGroup: 4, // 그룹 당 슬라이드 수 설정
+          },
+          // 768px 이상일 때
+          750: {
+            slidesPerView: 3,
+            slidesPerGroup: 3, // 그룹 당 슬라이드 수 설정
+          },
+          375: {
+            slidesPerView: 2,
+            slidesPerGroup: 2, // 그룹 당 슬라이드 수 설정
+          },
+        }}
+      >
+        {todayMovieList.map((movie) => {
+          return (
+            <>
+              <SwiperSlide key={movie.rnum}>
+                <div>
+                  <_imgWrapper>
+                    <Link to={`/movie/${movie.movieNm}/${movie.openDt.replaceAll("-", "")}`}>
+                      <_movieImg src={movie.poster} alt={movie.poster} fetchpriority="high" />
+                      <_movieRank>{movie.rnum}</_movieRank>
+                    </Link>
+                  </_imgWrapper>
+
+                  <_movieBox>
+                    <_movieName>{movie.movieNm}</_movieName>
+                    <div>
+                      {movie.audiChange > 0 ? (
+                        <span>어제보다 {movie.audiChange}% 🔥 </span>
+                      ) : (
+                        <span>어제보다 {movie.audiChange}% 👎</span>
+                      )}
+                    </div>
+                  </_movieBox>
+                </div>
+              </SwiperSlide>
+            </>
+          );
+        })}
+      </_customSwiper>
+    </>
   );
 }
 
