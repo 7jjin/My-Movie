@@ -10,76 +10,88 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import useBoxOffice from "../hooks/useBoxOffice";
 import getCurrentDate from "../libs/date.js";
+import Carousel from "./skeleton/Carousel.js";
 
 export default function WeekendSlid() {
-  const { weekendMovieList } = useSelector((state) => state.weekendMovieChart);
   const dispatch = useDispatch();
+
+  // 주간 박스오피스 리스트
+  const { weekendMovieList } = useSelector((state) => state.weekendMovieChart);
+  // api호출을 위한 오늘날짜
   const date = getCurrentDate();
+  // 로딩 중일 때 스켈레톤 UI를 보여주기 위한 상태
+  const { isLoading } = useSelector((state) => state.apiLoading);
+
   const url = `https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchWeeklyBoxOfficeList.json?key=${process.env.REACT_APP_BOXOFFICE_SECRETKEY}&targetDt=${date}&weekGb=0`;
 
   // 주간 박스오피스 정보 가져오는 custom-hook
   useBoxOffice(dispatch, url, "weeklyBoxOffice");
 
   return (
-    <_customSwiper
-      modules={[Navigation, A11y]}
-      spaceBetween={10}
-      slidesPerView={5}
-      navigation
-      slidesPerGroup={5} // 그룹 당 슬라이드 수 설정
-      //   onSwiper={(swiper) => console.log(swiper)}
-      onSlideChange={() => console.log("slide change")}
-      breakpoints={{
-        // 1300px 이상일 때
-        1300: {
-          slidesPerView: 5,
-          spaceBetween: 30,
-        },
-        // 1024px 이상일 때
-        1024: {
-          slidesPerView: 4,
-          spaceBetween: 10,
-          slidesPerGroup: 4, // 그룹 당 슬라이드 수 설정
-        },
-        // 768px 이상일 때
-        750: {
-          slidesPerView: 3,
-          slidesPerGroup: 3, // 그룹 당 슬라이드 수 설정
-        },
-        375: {
-          slidesPerView: 2,
-          slidesPerGroup: 2, // 그룹 당 슬라이드 수 설정
-        },
-      }}
-    >
-      {weekendMovieList.map((movie) => {
-        return (
-          <>
-            <SwiperSlide key={movie.rnum}>
-              <div>
-                <_imgWrapper>
-                  <Link to={`/movie/${movie.movieNm}/${movie.openDt.replaceAll("-", "")}`}>
-                    <_movieImg src={movie.poster} alt={movie.poster} loading="lazy" decoding="async" />
-                    <_movieRank>{movie.rnum}</_movieRank>
-                  </Link>
-                </_imgWrapper>
-
-                <_movieBox>
-                  <_movieName>{movie.movieNm}</_movieName>
+    <>
+      {isLoading && <Carousel />}
+      {!isLoading && (
+        <_customSwiper
+          modules={[Navigation, A11y]}
+          spaceBetween={10}
+          slidesPerView={5}
+          navigation
+          slidesPerGroup={5} // 그룹 당 슬라이드 수 설정
+          //   onSwiper={(swiper) => console.log(swiper)}
+          onSlideChange={() => console.log("slide change")}
+          breakpoints={{
+            // 1300px 이상일 때
+            1300: {
+              slidesPerView: 5,
+              spaceBetween: 30,
+            },
+            // 1024px 이상일 때
+            1024: {
+              slidesPerView: 4,
+              spaceBetween: 10,
+              slidesPerGroup: 4, // 그룹 당 슬라이드 수 설정
+            },
+            // 768px 이상일 때
+            750: {
+              slidesPerView: 3,
+              slidesPerGroup: 3, // 그룹 당 슬라이드 수 설정
+            },
+            375: {
+              slidesPerView: 2,
+              slidesPerGroup: 2, // 그룹 당 슬라이드 수 설정
+            },
+          }}
+        >
+          {weekendMovieList.map((movie) => {
+            return (
+              <>
+                <SwiperSlide key={movie.rnum}>
                   <div>
-                    {movie.audiChange > 0 ? (
-                      <span>저번주보다 {movie.audiChange}% 🔥 </span>
-                    ) : (
-                      <span>전번주보다 {movie.audiChange}% 👎</span>
-                    )}
+                    <_imgWrapper>
+                      <Link to={`/movie/${movie.movieNm}/${movie.openDt.replaceAll("-", "")}`}>
+                        <_movieImg src={movie.poster} alt={movie.poster} loading="lazy" decoding="async" />
+                        <_movieRank>{movie.rnum}</_movieRank>
+                      </Link>
+                    </_imgWrapper>
+
+                    <_movieBox>
+                      <_movieName>{movie.movieNm}</_movieName>
+                      <div>
+                        {movie.audiChange > 0 ? (
+                          <span>저번주보다 {movie.audiChange}% 🔥 </span>
+                        ) : (
+                          <span>전번주보다 {movie.audiChange}% 👎</span>
+                        )}
+                      </div>
+                    </_movieBox>
                   </div>
-                </_movieBox>
-              </div>
-            </SwiperSlide>
-          </>
-        );
-      })}
-    </_customSwiper>
+                </SwiperSlide>
+              </>
+            );
+          })}
+        </_customSwiper>
+      )}
+    </>
   );
 }
 
