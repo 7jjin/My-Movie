@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import useBoxOffice from "../hooks/useBoxOffice";
 import getCurrentDate from "../libs/date.js";
 import Carousel from "./skeleton/Carousel.js";
+import { useEffect, useState } from "react";
 
 export default function WeekendSlid() {
   const dispatch = useDispatch();
@@ -29,8 +30,9 @@ export default function WeekendSlid() {
 
   return (
     <>
-      {isLoading && <Carousel />}
-      {!isLoading && (
+      {weekendMovieList.length === 0 && isLoading === true ? (
+        <Carousel />
+      ) : (
         <_customSwiper
           modules={[Navigation, A11y]}
           spaceBetween={10}

@@ -29,8 +29,9 @@ export default function MainSlide() {
 
   return (
     <>
-      {isLoading && <Carousel />}
-      {!isLoading && (
+      {todayMovieList.length === 0 && isLoading === true ? (
+        <Carousel />
+      ) : (
         <_customSwiper
           modules={[Navigation, A11y]}
           spaceBetween={10}
