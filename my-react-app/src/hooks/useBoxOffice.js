@@ -12,12 +12,10 @@ import { apiLoadingAction } from "../store/apiLoading";
 
 // 박스오피스 정보를 불러오는 Hook
 const useBoxOffice = (dispatch, url, sortedMovie) => {
-  // 날짜 메모이제이션
-  const currentDate = useMemo(() => getCurrentDate(), []);
-
   // 로딩 상태
   const { isLoading } = useSelector((state) => state.apiLoading);
-
+  // 날짜
+  const date = getCurrentDate();
   useEffect(() => {
     const getMovie = async () => {
       dispatch(apiLoadingAction.isLoading(true));
@@ -103,7 +101,7 @@ const useBoxOffice = (dispatch, url, sortedMovie) => {
       }
     };
     getMovie();
-  }, [currentDate]);
+  }, [date]);
 };
 
 export default useBoxOffice;
