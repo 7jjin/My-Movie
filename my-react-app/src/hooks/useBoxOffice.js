@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { WeekendMovieChartAction } from "../store/weekendMovieChart";
 import { TodayMovieChartAction } from "../store/todayMovieChart";
@@ -7,15 +7,18 @@ import { koreaMovieListAction } from "../store/koreaMovie";
 import { japenMovieListAction } from "../store/japenMovie";
 import { etcMovieListAction } from "../store/etcMovie";
 import { usMovieListAction } from "../store/UsMovie";
-import { useSelector } from "react-redux";
 import { apiLoadingAction } from "../store/apiLoading";
+import { useSelector } from "react-redux";
 
 // 박스오피스 정보를 불러오는 Hook
 const useBoxOffice = (dispatch, url, sortedMovie) => {
-  // 로딩 상태
-  const { isLoading } = useSelector((state) => state.apiLoading);
+  // 첫 로딩인지 확인하는 state
+  const [isFirst, setIsFirst] = useState(true);
+
+  const isLoading = useSelector((state) => state.apiLoading.isLoading);
+
   // 날짜
-  const date = getCurrentDate();
+  const currentDate = useMemo(() => getCurrentDate(), []);
   useEffect(() => {
     const getMovie = async () => {
       dispatch(apiLoadingAction.isLoading(true));
@@ -79,7 +82,9 @@ const useBoxOffice = (dispatch, url, sortedMovie) => {
           default:
             break;
         }
+
         dispatch(apiLoadingAction.isLoading(false));
+        setIsFirst(false);
       } catch (error) {
         console.error("Error fetching box office data:", error);
       }
@@ -101,7 +106,7 @@ const useBoxOffice = (dispatch, url, sortedMovie) => {
       }
     };
     getMovie();
-  }, [date]);
+  }, [currentDate]);
 };
 
 export default useBoxOffice;
