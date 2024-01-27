@@ -25,7 +25,7 @@ export default function MainSlide() {
   const url = `https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=${process.env.REACT_APP_BOXOFFICE_SECRETKEY}&targetDt=${date}`;
 
   // 상황에 맞는 영화 리스트 출력하는 훅
-  useBoxOffice(dispatch, url, "dailyBoxOffice");
+  useBoxOffice(dispatch, "dailyBoxOffice");
 
   return (
     <>

@@ -26,7 +26,7 @@ export default function WeekendSlid() {
   const url = `https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchWeeklyBoxOfficeList.json?key=${process.env.REACT_APP_BOXOFFICE_SECRETKEY}&targetDt=${date}&weekGb=0`;
 
   // 주간 박스오피스 정보 가져오는 custom-hook
-  useBoxOffice(dispatch, url, "weeklyBoxOffice");
+  useBoxOffice(dispatch, "weeklyBoxOffice");
 
   return (
     <>

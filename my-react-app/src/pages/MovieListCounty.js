@@ -1,4 +1,5 @@
-import React from "react";
+import { useSearchParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import GenreList from "../component/GenreList";
 import Header from "../component/Header";
 import Navbar from "../component/Navbar";
@@ -9,14 +10,40 @@ import styled, { ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme } from "../component/theme";
 import useBoxOffice from "../hooks/useBoxOffice";
 
-export default function KoreaMovie() {
-  const { etcMovieList } = useSelector((state) => state.etcMovieList);
+export default function MovieListCounty() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const movieListCountry = searchParams.get("country");
   const genreList = useSelector((state) => state.genreList);
   const isDarkMode = useSelector((state) => state.app.isDarkMode);
-  const url = `https://kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json?key=f5eef3421c602c6cb7ea224104795888&repNationCd=22049999&movieTypeCd=220101&openStartDt=2010&openEndDt=2022&itemPerPage=100`;
-  const dispatch = useDispatch();
 
-  useBoxOffice(dispatch, url, "etcMovieList");
+  const dispatch = useDispatch();
+  // 영화 리스트 API호출 훅
+  useBoxOffice(dispatch, movieListCountry + "MovieList");
+
+  const { koreaMovieList } = useSelector((state) => state.koreaMovieList);
+  const { japenMovieList } = useSelector((state) => state.japenMovieList);
+  const { usMovieList } = useSelector((state) => state.usMovieList);
+  const { etcMovieList } = useSelector((state) => state.etcMovieList);
+
+  // 영화 리스트
+  const [movieList, setMovieList] = useState();
+
+  const [title, setTitle] = useState();
+  useEffect(() => {
+    if (movieListCountry === "Korea") {
+      setMovieList(koreaMovieList);
+      setTitle("한국영화");
+    } else if (movieListCountry === "Japen") {
+      setMovieList(japenMovieList);
+      setTitle("일본영화");
+    } else if (movieListCountry === "Us") {
+      setMovieList(usMovieList);
+      setTitle("미국영화");
+    } else if (movieListCountry === "Etc") {
+      setMovieList(etcMovieList);
+      setTitle("기타영화");
+    }
+  }, [koreaMovieList, japenMovieList, usMovieList, etcMovieList]);
 
   return (
     <>
@@ -24,25 +51,26 @@ export default function KoreaMovie() {
         <GlobalStyles />
         <_MainPage>
           <_bigWrapper className="BigWrapper">
-            <h1>기타 영화</h1>
+            <h1>{title}</h1>
             <h3>장르선택</h3>
-            <hr />
+            <hr style={{ width: "89%" }} />
             <GenreList />
             <_section>
               <_ul>
-                {etcMovieList
-                  .filter((movie) => {
-                    // 선택한 장르 목록에 어떤 장르가 포함되어 있으면 해당 장르의 영화만 표시
-                    return genreList.length === 0 || genreList.includes(movie.genreAlt.split(",")[0]);
-                  })
-                  .filter((movie) => movie.poster)
-                  .map((movie) => {
-                    return (
-                      <_li key={movie.rnum}>
-                        <_img src={movie.poster} />
-                      </_li>
-                    );
-                  })}
+                {movieList &&
+                  movieList
+                    .filter((movie) => {
+                      // 선택한 장르 목록에 어떤 장르가 포함되어 있으면 해당 장르의 영화만 표시
+                      return genreList.length === 0 || genreList.includes(movie.genreAlt.split(",")[0]);
+                    })
+                    .filter((movie) => movie.poster)
+                    .map((movie) => {
+                      return (
+                        <_li key={movie.rnum}>
+                          <_img src={movie.poster} />
+                        </_li>
+                      );
+                    })}
               </_ul>
             </_section>
           </_bigWrapper>
