@@ -11,7 +11,7 @@ export default function Country() {
       <_CountryWrapper className="CountryWrapper">
         <_title className="title">나라별 추천 영화</_title>
         <_countryBox className="countryBox">
-          <Link to={"/KoreaMovie"}>
+          <Link to={"/movieList?country=Korea"}>
             <_countryKorea>
               <div className="Korea">
                 <span>한국</span>
@@ -20,27 +20,27 @@ export default function Country() {
             </_countryKorea>
           </Link>
 
-          <Link to={"/JapenMovie"}>
+          <Link to={"/movieList?country=Japen"}>
             <_countryJapen>
-              <div className="Korea">
+              <div className="Japen">
                 <span>일본</span>
                 <_img src={japenMovieImg} rel="preload" loading="lazy" alt="japenMovie"></_img>
               </div>
             </_countryJapen>
           </Link>
 
-          <Link to={"/UsMovie"}>
+          <Link to={"/movieList?country=Us"}>
             <_countryUS>
-              <div className="Korea">
+              <div className="Us">
                 <span>미국</span>
                 <_img src={usMovieImg} rel="preload" loading="lazy" alt="usMovie"></_img>
               </div>
             </_countryUS>
           </Link>
 
-          <Link to={"/EtcMovie"}>
+          <Link to={"/movieList?country=Etc"}>
             <_countryEtc>
-              <div className="Korea">
+              <div className="Etc">
                 <span>기타</span>
                 <_img src={etcMovieImg} rel="preload" loading="lazy" alt="etcMovie"></_img>
               </div>

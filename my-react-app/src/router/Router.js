@@ -6,10 +6,7 @@ const MainPage = lazy(() => import("../pages/MainPage"));
 const LoginPage = lazy(() => import("../pages/LoginPage"));
 const SignupPage = lazy(() => import("../pages/SignupPage"));
 const MovieDetail = lazy(() => import("../pages/MovieDetail"));
-const KoreaMovie = lazy(() => import("../pages/KoreaMovie"));
-const JapenMovie = lazy(() => import("../pages/JapenMovie"));
-const UsMovie = lazy(() => import("../pages/UsMovie"));
-const EtcMovie = lazy(() => import("../pages/EtcMovie"));
+const MovieListCounty = lazy(() => import("../pages/MovieListCounty"));
 
 export default function Router() {
   return (
@@ -21,10 +18,7 @@ export default function Router() {
             <Route path="login" element={<LoginPage />} />
             <Route path="signup" element={<SignupPage />} />
             <Route path="/movie/:movieName/:openDate" element={<MovieDetail />} />
-            <Route path="/KoreaMovie" element={<KoreaMovie />} />
-            <Route path="/JapenMovie" element={<JapenMovie />} />
-            <Route path="/UsMovie" element={<UsMovie />} />
-            <Route path="/EtcMovie" element={<EtcMovie />} />
+            <Route path="/movieList" element={<MovieListCounty />} /> {/* 국가별 영화 페이지 */}
           </Routes>
         </Suspense>
       </BrowserRouter>

@@ -11,15 +11,42 @@ import { apiLoadingAction } from "../store/apiLoading";
 import { useSelector } from "react-redux";
 
 // 박스오피스 정보를 불러오는 Hook
-const useBoxOffice = (dispatch, url, sortedMovie) => {
+const useBoxOffice = (dispatch, sortedMovie) => {
   // 첫 로딩인지 확인하는 state
   const [isFirst, setIsFirst] = useState(true);
 
   const isLoading = useSelector((state) => state.apiLoading.isLoading);
-
   // 날짜
   const currentDate = useMemo(() => getCurrentDate(), []);
+
   useEffect(() => {
+    let url;
+    switch (sortedMovie) {
+      case "dailyBoxOffice":
+        url = `https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=${process.env.REACT_APP_BOXOFFICE_SECRETKEY}&targetDt=${currentDate}`;
+        break;
+      case "weeklyBoxOffice":
+        url = `https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchWeeklyBoxOfficeList.json?key=${process.env.REACT_APP_BOXOFFICE_SECRETKEY}&targetDt=${currentDate}&weekGb=0`;
+        break;
+      case "KoreaMovieList":
+        url =
+          "https://kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json?key=f5eef3421c602c6cb7ea224104795888&repNationCd=22041011&movieTypeCd=220101&openStartDt=2010&openEndDt=2022&itemPerPage=100";
+        break;
+      case "JapenMovieList":
+        url =
+          "https://kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json?key=f5eef3421c602c6cb7ea224104795888&repNationCd=22041008&movieTypeCd=220101&openStartDt=2010&openEndDt=2022&itemPerPage=100";
+        break;
+      case "UsMovieList":
+        url =
+          "https://kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json?key=f5eef3421c602c6cb7ea224104795888&repNationCd=22042002&movieTypeCd=220101&openStartDt=2010&openEndDt=2022&itemPerPage=100";
+        break;
+      case "EtcMovieList":
+        url =
+          "https://kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json?key=f5eef3421c602c6cb7ea224104795888&repNationCd=22049999&movieTypeCd=220101&openStartDt=2010&openEndDt=2022&itemPerPage=100";
+        break;
+      default:
+        break;
+    }
     const getMovie = async () => {
       dispatch(apiLoadingAction.isLoading(true));
       try {
@@ -36,16 +63,16 @@ const useBoxOffice = (dispatch, url, sortedMovie) => {
           case "weeklyBoxOffice":
             movieList = res.data.boxOfficeResult.weeklyBoxOfficeList;
             break;
-          case "koreaMovieList":
+          case "KoreaMovieList":
             movieList = res.data.movieListResult.movieList;
             break;
-          case "japenMovieList":
+          case "JapenMovieList":
             movieList = res.data.movieListResult.movieList;
             break;
-          case "usMovieList":
+          case "UsMovieList":
             movieList = res.data.movieListResult.movieList;
             break;
-          case "etcMovieList":
+          case "EtcMovieList":
             movieList = res.data.movieListResult.movieList;
             break;
           default:
@@ -67,16 +94,16 @@ const useBoxOffice = (dispatch, url, sortedMovie) => {
           case "weeklyBoxOffice":
             dispatch(WeekendMovieChartAction.isLoading(updatedMovieList));
             break;
-          case "koreaMovieList":
+          case "KoreaMovieList":
             dispatch(koreaMovieListAction.isLoading(updatedMovieList));
             break;
-          case "japenMovieList":
+          case "JapenMovieList":
             dispatch(japenMovieListAction.isLoading(updatedMovieList));
             break;
-          case "usMovieList":
+          case "UsMovieList":
             dispatch(usMovieListAction.isLoading(updatedMovieList));
             break;
-          case "etcMovieList":
+          case "EtcMovieList":
             dispatch(etcMovieListAction.isLoading(updatedMovieList));
             break;
           default:
