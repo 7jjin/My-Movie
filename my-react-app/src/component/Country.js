@@ -15,7 +15,7 @@ export default function Country() {
             <_countryKorea>
               <div className="Korea">
                 <span>한국</span>
-                <_img src={koreaMovieImg} rel="preload" loading="lazy" alt="koreaMovie"></_img>
+                <_img src={koreaMovieImg} alt="koreaMovie"></_img>
               </div>
             </_countryKorea>
           </Link>
@@ -24,7 +24,7 @@ export default function Country() {
             <_countryJapen>
               <div className="Japen">
                 <span>일본</span>
-                <_img src={japenMovieImg} rel="preload" loading="lazy" alt="japenMovie"></_img>
+                <_img src={japenMovieImg} alt="japenMovie"></_img>
               </div>
             </_countryJapen>
           </Link>
@@ -33,7 +33,7 @@ export default function Country() {
             <_countryUS>
               <div className="Us">
                 <span>미국</span>
-                <_img src={usMovieImg} rel="preload" loading="lazy" alt="usMovie"></_img>
+                <_img src={usMovieImg} alt="usMovie"></_img>
               </div>
             </_countryUS>
           </Link>
@@ -42,7 +42,7 @@ export default function Country() {
             <_countryEtc>
               <div className="Etc">
                 <span>기타</span>
-                <_img src={etcMovieImg} rel="preload" loading="lazy" alt="etcMovie"></_img>
+                <_img src={etcMovieImg} alt="etcMovie"></_img>
               </div>
             </_countryEtc>
           </Link>
