@@ -3,11 +3,6 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import axios from "axios";
 
 import styled from "styled-components";
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 

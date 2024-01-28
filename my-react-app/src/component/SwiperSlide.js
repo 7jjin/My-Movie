@@ -1,15 +1,9 @@
-import { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, A11y } from "swiper/modules";
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import useBoxOffice from "../hooks/useBoxOffice";
-import getCurrentDate from "../libs/date";
 import Carousel from "./skeleton/Carousel.js";
 
 export default function MainSlide() {
@@ -17,12 +11,9 @@ export default function MainSlide() {
 
   // 일별 박스오피스 리스트
   const { todayMovieList } = useSelector((state) => state.todayMovieChart);
-  // api호출을 위한 오늘날짜
-  const date = getCurrentDate();
+
   // 로딩 중일 때 스켈레톤 UI를 보여주기 위한 상태
   const { isLoading } = useSelector((state) => state.apiLoading);
-
-  const url = `https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=${process.env.REACT_APP_BOXOFFICE_SECRETKEY}&targetDt=${date}`;
 
   // 상황에 맞는 영화 리스트 출력하는 훅
   useBoxOffice(dispatch, "dailyBoxOffice");
@@ -97,7 +88,6 @@ export default function MainSlide() {
 }
 
 //  styled-components
-
 const _movieImg = styled.img`
   height: 234px;
   border-radius: 15px;

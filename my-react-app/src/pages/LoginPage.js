@@ -8,7 +8,7 @@ export default function SignupPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isDirty, isValid },
+    formState: { errors, isValid },
     watch,
   } = useForm({ mode: "onChange" });
   const navigate = useNavigate();

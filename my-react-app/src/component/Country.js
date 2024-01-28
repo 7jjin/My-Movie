@@ -71,8 +71,8 @@ const _countryBox = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
-  a {
-    width: 23%;
+  div {
+    width: 90%;
     height: 165px;
     border-radius: 10px;
     @media (max-width: 750px) {
@@ -84,7 +84,7 @@ const _countryBox = styled.div`
   }
 `;
 
-const _countryKorea = styled.a`
+const _countryKorea = styled.div`
   background: 0% 0% / cover no-repeat rgb(56, 11, 11);
   transform: scale(1.01);
   position: relative;
@@ -101,7 +101,7 @@ const _countryKorea = styled.a`
     left: 15px;
   }
 `;
-const _countryJapen = styled.a`
+const _countryJapen = styled.div`
   background: 0% 0% / cover no-repeat rgb(96, 101, 41);
   transform: scale(1.01);
   position: relative;
@@ -118,7 +118,7 @@ const _countryJapen = styled.a`
     left: 15px;
   }
 `;
-const _countryUS = styled.a`
+const _countryUS = styled.div`
   background: 0% 0% / cover no-repeat rgb(26, 71, 113);
   transform: scale(1.01);
   position: relative;
@@ -134,7 +134,7 @@ const _countryUS = styled.a`
     left: 15px;
   }
 `;
-const _countryEtc = styled.a`
+const _countryEtc = styled.div`
   background: 0% 0% / cover no-repeat rgb(39, 63, 55);
   transform: scale(1.01);
   position: relative;
