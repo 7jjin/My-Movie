@@ -1,33 +1,22 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, A11y } from "swiper/modules";
-
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import useBoxOffice from "../hooks/useBoxOffice";
-import getCurrentDate from "../libs/date.js";
 import Carousel from "./skeleton/Carousel.js";
-import { useEffect, useState } from "react";
 
 export default function WeekendSlid() {
   const dispatch = useDispatch();
 
   // 주간 박스오피스 리스트
   const { weekendMovieList } = useSelector((state) => state.weekendMovieChart);
-  // api호출을 위한 오늘날짜
-  const date = getCurrentDate();
+
   // 로딩 중일 때 스켈레톤 UI를 보여주기 위한 상태
   const { isLoading } = useSelector((state) => state.apiLoading);
 
-  const url = `https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchWeeklyBoxOfficeList.json?key=${process.env.REACT_APP_BOXOFFICE_SECRETKEY}&targetDt=${date}&weekGb=0`;
-
   // 주간 박스오피스 정보 가져오는 custom-hook
   useBoxOffice(dispatch, "weeklyBoxOffice");
-
   return (
     <>
       {weekendMovieList.length === 0 && isLoading === true ? (

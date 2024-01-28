@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import axios from "axios";
 import { WeekendMovieChartAction } from "../store/weekendMovieChart";
 import { TodayMovieChartAction } from "../store/todayMovieChart";
@@ -8,14 +8,9 @@ import { japenMovieListAction } from "../store/japenMovie";
 import { etcMovieListAction } from "../store/etcMovie";
 import { usMovieListAction } from "../store/UsMovie";
 import { apiLoadingAction } from "../store/apiLoading";
-import { useSelector } from "react-redux";
 
 // 박스오피스 정보를 불러오는 Hook
 const useBoxOffice = (dispatch, sortedMovie) => {
-  // 첫 로딩인지 확인하는 state
-  const [isFirst, setIsFirst] = useState(true);
-
-  const isLoading = useSelector((state) => state.apiLoading.isLoading);
   // 날짜
   const currentDate = useMemo(() => getCurrentDate(), []);
 
@@ -109,9 +104,7 @@ const useBoxOffice = (dispatch, sortedMovie) => {
           default:
             break;
         }
-
         dispatch(apiLoadingAction.isLoading(false));
-        setIsFirst(false);
       } catch (error) {
         console.error("Error fetching box office data:", error);
       }

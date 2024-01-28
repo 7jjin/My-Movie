@@ -7,7 +7,6 @@ import React, { useState } from "react";
 
 export default function Header() {
   const [isLogin, setIsLogin] = useState(!!localStorage.getItem("isLogin"));
-  console.log(isLogin);
   const logout = () => {
     localStorage.clear();
     setIsLogin(false); // 로그아웃 시 상태를 업데이트하여 리렌더링
@@ -96,7 +95,7 @@ const LoginBtn = styled.button`
 `;
 
 const SignInButton = styled.button`
-  background-color: #f82f62;
+  background-color: rgb(255 0 65);
   color: white;
   border-radius: 4px;
   padding: 4px 10px;
@@ -105,7 +104,7 @@ const SignInButton = styled.button`
   border: none;
 `;
 
-const Navbar_a = styled.a`
+const Navbar_a = styled.div`
   display: block;
   margin: 24px 0 0 26px;
   text-decoration: none;

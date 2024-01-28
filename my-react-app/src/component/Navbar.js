@@ -96,7 +96,7 @@ const NavbarDiv = styled.nav`
     top: initial;
   }
 `;
-const Navbar_a = styled.a`
+const Navbar_a = styled.div`
   display: block;
   margin: 24px 0 0 26px;
   text-decoration: none;
