@@ -88,7 +88,7 @@ const NavbarDiv = styled.nav`
   background: ${(props) => props.theme.bgColor};
 
   width: 240px;
-  height: 100%;
+  height: 100vh;
   @media (max-width: 900px) {
     bottom: 0px;
     width: 100%;

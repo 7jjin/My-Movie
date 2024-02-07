@@ -22,10 +22,10 @@ export default function MainPage() {
   );
 }
 const _MainPage = styled.div`
-  min-height: 100vh;
+  /* min-height: 100vh; */
   display: flex;
   flex-direction: column;
-  height: 100%;
+  /* height: 100%; */
   padding: 56px 0 0 240px;
   @media (max-width: 900px) {
     padding-left: 0px;
