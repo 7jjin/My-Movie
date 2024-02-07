@@ -16,7 +16,7 @@ export default function Main() {
 }
 const _mainWrapper = styled.div`
   padding-bottom: 32px;
-  height: 100vh;
+  /* height: 100vh; */
   background-color: ${(props) => props.theme.mainWrapper};
   color: white;
 `;
