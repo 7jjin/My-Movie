@@ -22,11 +22,11 @@ export default function MainPage() {
   );
 }
 const _MainPage = styled.div`
-  /* min-height: 100vh; */
   display: flex;
   flex-direction: column;
-  /* height: 100%; */
   padding: 56px 0 0 240px;
+  height: 100vh;
+  background-color: ${(props) => props.theme.mainWrapper};
   @media (max-width: 900px) {
     padding-left: 0px;
     padding-bottom: 58px;

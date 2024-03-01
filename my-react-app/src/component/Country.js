@@ -52,6 +52,7 @@ export default function Country() {
   );
 }
 const _CountryWrapper = styled.div`
+  background-color: ${(props) => props.theme.mainWrapper};
   padding-right: 40px;
   padding-left: 40px;
   margin-top: 40px;
