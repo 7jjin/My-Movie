@@ -14,7 +14,7 @@ export default function Header() {
   return (
     <>
       <WrapperBox>
-        <Link to={"/main"}>
+        <Link to={"/"}>
           <Navbar_a>
             <Navbar_img src={JINCHA_LOGO} alt="LOGO"></Navbar_img>
           </Navbar_a>

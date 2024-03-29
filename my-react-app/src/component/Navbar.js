@@ -33,7 +33,7 @@ export default function Navbar() {
   return (
     <>
       <NavbarDiv>
-        <Link to={"/main"}>
+        <Link to={"/"}>
           <Navbar_a>
             <Navbar_img src={JINCHA_LOGO} alt="LOGO"></Navbar_img>
           </Navbar_a>
@@ -42,7 +42,7 @@ export default function Navbar() {
         <Section>
           <ul>
             <_li>
-              <Link to={"/main"} style={{ textDecoration: "none", width: "100%" }}>
+              <Link to={"/"} style={{ textDecoration: "none", width: "100%" }}>
                 <Nav_a>
                   <FontAwesomeIcon icon={faHouse} />
                   <Nav_span>홈</Nav_span>
