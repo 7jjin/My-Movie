@@ -32,7 +32,7 @@ export default function SignupPage() {
       <section className="login">
         <_nav>
           <Navbar_a>
-            <Link to={"/"}>
+            <Link to={"/main"}>
               <Navbar_img src={JINCHA_LOGO}></Navbar_img>
             </Link>
           </Navbar_a>

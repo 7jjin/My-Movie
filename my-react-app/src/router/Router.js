@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // React.lazy 적용
+const StartPage = lazy(() => import("../pages/StartPage"));
 const MainPage = lazy(() => import("../pages/MainPage"));
 const LoginPage = lazy(() => import("../pages/LoginPage"));
 const SignupPage = lazy(() => import("../pages/SignupPage"));
@@ -14,7 +15,8 @@ export default function Router() {
       <BrowserRouter>
         <Suspense>
           <Routes>
-            <Route path="/" element={<MainPage />} />
+            <Route path="/" element={<StartPage />} />
+            <Route path="/main" element={<MainPage />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="signup" element={<SignupPage />} />
             <Route path="/movie/:movieName/:openDate" element={<MovieDetail />} />
