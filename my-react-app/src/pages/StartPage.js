@@ -3,11 +3,14 @@ import { Link } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import searchIcon from "../img/search-icon.png";
 import homeIcon from "../img/home-icon.png";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function StartPage() {
+  const navigate = useNavigate();
   useEffect(() => {
     const time = gsap.timeline();
     time
@@ -46,6 +49,26 @@ export default function StartPage() {
       });
   }, []);
 
+  const [movieTitle, setMovieTitle] = useState("");
+
+  const handleMovieTitle = (e) => {
+    setMovieTitle(e.target.value);
+  };
+
+  const searchMovie = async () => {
+    if (movieTitle) {
+      try {
+        const res = await axios.get(
+          `https://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&detail=Y&title=${movieTitle}&ServiceKey=${process.env.REACT_APP_POSTERS_SECRETKEY}`
+        );
+        const releaseDts = res.data.Data[0].Result[0].repRlsDate.replace("-", "");
+        navigate(`/movie/${movieTitle}/${releaseDts}`);
+        // console.log(res.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+  };
   return (
     <>
       <_wrap className="wrap">
@@ -75,8 +98,8 @@ export default function StartPage() {
           <div className="char">요</div>
         </_title>
         <_contentBox className="content">
-          <_input type="text"></_input>
-          <_searchImg src={searchIcon} alt="search-icon" />
+          <_input type="text" onChange={handleMovieTitle}></_input>
+          <_searchImg src={searchIcon} alt="search-icon" onClick={searchMovie} />
         </_contentBox>
       </_wrap>
       <_fadeWrap className="fade-wrap"></_fadeWrap>
