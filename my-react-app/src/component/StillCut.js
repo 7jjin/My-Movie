@@ -1,5 +1,6 @@
+/* eslint-disable react/jsx-pascal-case */
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { Navigation, Pagination, Autoplay, A11y } from "swiper/modules";
 import axios from "axios";
 
 import styled from "styled-components";
@@ -18,6 +19,7 @@ export default function StillCut() {
         );
         const jsonData = response.data.Data[0].Result[0];
         const imageUrls = jsonData.stlls.split("|");
+        console.log(imageUrls);
         setMovieData(imageUrls);
       } catch (error) {
         console.error("포스터를 불러오는 중 오류 발생:", error);
@@ -29,9 +31,10 @@ export default function StillCut() {
   return (
     <>
       <_h1>스틸컷</_h1>
-      <_swiperWrapper className="swiperWrppaer">
+      <_swiperWrapper>
         <_customSwiper
-          modules={[Navigation, Pagination, Autoplay]}
+          className="swiper-container"
+          modules={[Navigation, Autoplay, A11y]}
           spaceBetween={10}
           slidesPerView={1}
           slidesPerGroup={1} // 그룹 당 슬라이드 수 설정
@@ -43,9 +46,9 @@ export default function StillCut() {
             loopAdditionalSlides: 1,
             pauseOnMouseEnter: true,
           }}
-          onSwiper={(swiper) => {
-            swiper.autoplay.start(); // 렌더링 후에 Autoplay를 시작합니다.
-          }}
+          // onSwiper={(swiper) => {
+          //   swiper.autoplay.start(); // 렌더링 후에 Autoplay를 시작합니다.
+          // }}
           breakpoints={{
             // 1300px 이상일 때
             1300: {
@@ -85,21 +88,27 @@ const _h1 = styled.h1`
 `;
 
 const _customSwiper = styled(Swiper)`
+  display: flex;
+  overflow: hidden;
   position: initial;
   background-color: ${(props) => props.theme.swiperColor};
   .swiper-button-prev,
   .swiper-button-next {
-    top: 93px;
+    position: absolute;
+    border: 1px solid white;
+    top: 93px !important;
+    width: 40px;
+    height: 40px;
     color: ${(props) => props.theme.color};
     @media (max-width: 900px) {
       top: 60px !important;
     }
   }
   .swiper-button-next {
-    right: 46px;
+    right: 46px !important;
   }
   .swiper-button-prev {
-    left: 20px;
+    left: 20px !important;
   }
   .swiper-button-next:after,
   .swiper-button-prev:after {
@@ -113,6 +122,7 @@ const _swiperWrapper = styled.div`
   padding: 10px 80px 32px;
   position: relative;
   .swiper-wrapper {
+    display: flex;
     transition-timing-function: linear !important;
     transition-duration: 500ms !important;
   }

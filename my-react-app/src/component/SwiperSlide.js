@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-pascal-case */
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, A11y } from "swiper/modules";
 import styled from "styled-components";
@@ -65,7 +66,6 @@ export default function MainSlide() {
                         <_movieRank>{movie.rnum}</_movieRank>
                       </Link>
                     </_imgWrapper>
-
                     <_movieBox>
                       <_movieName>{movie.movieNm}</_movieName>
                       <div>
@@ -153,6 +153,7 @@ const _customSwiper = styled(Swiper)`
       color: #fff; /* Hover 상태의 텍스트 색상 설정 */
     }
   }
+
   .swiper-button-prev {
     left: 12px !important;
     top: 55%;
